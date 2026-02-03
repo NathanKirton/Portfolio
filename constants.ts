@@ -80,7 +80,7 @@ export const EXPEDITIONS: Expedition[] = [
     tag: 'Move2Earn Project • Project 03',
     title: 'Move2Earn Mobile App',
     description: 'Move2Earn is a gamified fitness and screen-time management system that converts real physical activity into earned gaming minutes. Parents manage limits, rewards, and streak settings through a dedicated dashboard, while children track their progress, start timers, and upload activities. The platform integrates with Strava, uses Flask and MongoDB on the backend, and encourages healthier habits by linking movement to meaningful digital rewards.',
-    imageUrl: '/Icons/move2earnlogo.png',
+    imageUrl: '/Icons/Move2EarnLogo.png',
     side: 'right',
     tools: [
       {
