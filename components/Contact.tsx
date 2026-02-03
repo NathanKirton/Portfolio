@@ -34,7 +34,7 @@ const Contact: React.FC = () => {
               className="block group"
             >
               <img
-                src="/Icons/LinkedIn Image.jpg"
+                 src="/Icons/LinkedIn-Image.jpg"
                 alt="Nathan Kirton LinkedIn"
                 className="w-full h-full object-cover rounded-lg border-4 border-primary shadow-lg group-hover:shadow-2xl transition-all transform group-hover:scale-105"
               />
