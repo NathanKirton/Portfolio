@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "NorthTech Microservices",
+			"path": "../../../../../NorthTech Microservices"
+		},
+		{
+			"name": "tracking-service",
+			"path": "../.."
+		}
+	],
+	"settings": {}
+}

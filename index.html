@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nathan's Portfolio</title>
+    <link rel="icon" type="image/png" href="/Icons/MyLogo.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rock+Salt&family=Homemade+Apple&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f27f0d",
+                        "background-light": "#e9e4d9",
+                        "background-dark": "#1a140d",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "handwriting": ["Rock Salt", "cursive"],
+                        "marker": ["Permanent Marker", "cursive"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            background-color: #e9e4d9;
+        }
+        .dark body {
+            background-color: #1a140d;
+        }
+        .map-texture {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0k0pq9LeDCtvPMLlWQc4RZve1V_5qQdE5Uazjmal3ItLu5dpEHZm-Y30RT8T2oOk5QhRnEant_QQ0CQU9vZpvLkjq8trzfVIqUs7IYw3tjv0YFR9-KwfCYVw-ZVkW34UGK52roxAj25Dd76AA5BF862XN7jm2UYZL7ZS2uAlw91fJPBFgQgoLm5XswCI1UbLzHXS1lQc0_zTVFh1Ri3v52XwryVUPf83tm6oUClfpsvwtIQFuksUz6_jj_21xi2sgqBK-Sm5mj-31');
+            background-blend-mode: multiply;
+            background-size: 800px;
+        }
+        .vintage-overlay {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0k0pq9LeDCtvPMLlWQc4RZve1V_5qQdE5Uazjmal3ItLu5dpEHZm-Y30RT8T2oOk5QhRnEant_QQ0CQU9vZpvLkjq8trzfVIqUs7IYw3tjv0YFR9-KwfCYVw-ZVkW34UGK52roxAj25Dd76AA5BF862XN7jm2UYZL7ZS2uAlw91fJPBFgQgoLm5XswCI1UbLzHXS1lQc0_zTVFh1Ri3v52XwryVUPf83tm6oUClfpsvwtIQFuksUz6_jj_21xi2sgqBK-Sm5mj-31');
+            opacity: 0.25;
+            pointer-events: none;
+        }
+        .dark .vintage-overlay {
+            opacity: 0.15;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "framer-motion": "https://esm.sh/framer-motion@^12.31.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="transition-colors duration-300">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
