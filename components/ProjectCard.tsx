@@ -31,7 +31,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ expedition, onInViewChange })
         onViewportLeave={() => onInViewChange?.(expedition.id, false)}
       >
         {/* Date badge - positioned absolutely with rotation for visual interest */}
-        <div className={`font-handwriting px-3 py-1 bg-background-light/90 dark:bg-black/90 rounded-sm backdrop-blur-[2px] shadow-sm border border-black/10 dark:border-primary/20 absolute -top-8 text-lg whitespace-nowrap select-none font-bold z-40 text-black dark:text-primary ${isRight ? 'right-0 transform -rotate-2' : 'left-0 transform rotate-1'}`}>
+        <div className={`font-handwriting px-3 py-1 bg-background-light/90 dark:bg-black/90 rounded-sm backdrop-blur-[2px] shadow-sm border border-black/10 dark:border-primary/20 absolute -top-8 text-lg whitespace-nowrap select-none font-bold z-40 text-gray-700 dark:text-primary ${isRight ? 'right-0 transform -rotate-2' : 'left-0 transform rotate-1'}`}>
           {expedition.date}
         </div>
 
@@ -59,11 +59,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ expedition, onInViewChange })
               {expedition.tag}
             </span>
             {/* Project title */}
-            <h3 className="text-xl font-black mt-3 mb-2 uppercase tracking-tighter text-black dark:text-white">
+            <h3 className="text-xl font-black mt-3 mb-2 uppercase tracking-tighter text-gray-900 dark:text-white">
               {expedition.title}
             </h3>
             {/* Project description */}
-            <p className="text-slate-700 dark:text-slate-300 mb-5 font-medium leading-relaxed text-xs">
+            <p className="text-gray-700 dark:text-gray-300 mb-5 font-medium leading-relaxed text-xs">
               {expedition.description}
             </p>
             {/* View project link - navigates to project detail page */}

@@ -56,13 +56,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
             <span className="text-xs font-black text-white bg-black dark:bg-primary dark:text-black px-3 py-1 uppercase tracking-[0.2em]">
               {project.tag}
             </span>
-            <h1 className="text-5xl font-black mt-4 mb-4 uppercase tracking-tighter text-black dark:text-white">
+            <h1 className="text-5xl font-black mt-4 mb-4 uppercase tracking-tighter text-gray-900 dark:text-white">
               {project.title}
             </h1>
-            <p className="text-lg text-slate-700 dark:text-slate-300 mb-6">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
               {project.description}
             </p>
-            <div className="text-sm font-black text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+            <div className="text-sm font-black text-gray-600 dark:text-gray-400 uppercase tracking-wider">
               {project.date}
             </div>
           </div>
@@ -89,7 +89,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                 project.tools.map((category, idx) => (
                   <div key={idx}>
                     <h3 className="font-black uppercase tracking-wider mb-2">{category.name}</h3>
-                    <ul className="text-slate-700 dark:text-slate-300 space-y-1 text-sm">
+                    <ul className="text-gray-700 dark:text-gray-300 space-y-1 text-sm">
                       {category.items.map((item, itemIdx) => (
                         <li key={itemIdx}>• {item}</li>
                       ))}
@@ -97,7 +97,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                   </div>
                 ))
               ) : (
-                <p className="text-slate-700 dark:text-slate-300 md:col-span-2">No tools information available.</p>
+                <p className="text-gray-700 dark:text-gray-300 md:col-span-2">No tools information available.</p>
               )}
             </div>
           </motion.section>
@@ -110,7 +110,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
             className="mb-12"
           >
             <h2 className="text-3xl font-black mb-6">Project Overview</h2>
-            <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
+            <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
               {project.overview ? (
                 // Handle both string and array formats for sections
                 Array.isArray(project.overview.sections) ? (

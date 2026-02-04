@@ -135,10 +135,10 @@ export default function SwipeableCardStack() {
     <div className="w-full flex flex-col items-center py-16 px-6">
       {/* Section header */}
       <div className="mb-12 text-center">
-        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black dark:text-white mb-3">
+        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-gray-900 dark:text-white mb-3">
           MY SKILLS
         </h2>
-        <p className="text-slate-700 dark:text-slate-400 font-medium max-w-md">
+        <p className="text-gray-700 dark:text-gray-300 font-medium max-w-md">
           Technologies and tools I use to build digital solutions
         </p>
       </div>
@@ -241,10 +241,10 @@ export default function SwipeableCardStack() {
                     className="w-20 h-20 mb-4 flex items-center justify-center"
                     dangerouslySetInnerHTML={{ __html: card.icon }}
                   />
-                  <h3 className={`font-black text-3xl mb-3 ${isTop ? 'text-primary' : 'text-black dark:text-white'}`}>
+                  <h3 className={`font-black text-3xl mb-3 ${isTop ? 'text-primary' : 'text-gray-900 dark:text-white'}`}>
                     {card.title}
                   </h3>
-                  <p className="text-sm text-center text-slate-700 dark:text-slate-300 px-4 leading-relaxed">
+                  <p className="text-sm text-center text-gray-700 dark:text-gray-300 px-4 leading-relaxed">
                     {card.content}
                   </p>
                 </motion.div>
@@ -272,10 +272,10 @@ export default function SwipeableCardStack() {
                     className="w-20 h-20 mb-4 flex items-center justify-center"
                     dangerouslySetInnerHTML={{ __html: card.icon }}
                   />
-                  <h3 className="font-black text-3xl mb-3 text-black dark:text-white">
+                  <h3 className="font-black text-3xl mb-3 text-gray-900 dark:text-white">
                     {card.title}
                   </h3>
-                  <p className="text-sm text-center text-slate-700 dark:text-slate-300 px-4 leading-relaxed">
+                  <p className="text-sm text-center text-gray-700 dark:text-gray-300 px-4 leading-relaxed">
                     {card.content}
                   </p>
                 </motion.div>

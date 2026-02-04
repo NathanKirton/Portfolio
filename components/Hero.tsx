@@ -50,20 +50,20 @@ const Hero: React.FC = () => {
         transition={{ duration: 0.8 }}
         className="max-w-4xl mx-auto px-6 relative z-10"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-primary/10 text-black dark:text-primary border-2 border-black/20 dark:border-primary/20 mb-5 transform -rotate-1">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-primary/10 text-gray-700 dark:text-primary border-2 border-black/20 dark:border-primary/20 mb-5 transform -rotate-1">
           <span className="material-symbols-outlined text-xs font-bold">person</span>
           <span className="text-[10px] font-black uppercase tracking-[0.2em]">Junior Developer Seeking work as a</span>
         </div>
         
-        <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter text-black dark:text-white">
+        <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter text-gray-900 dark:text-white">
           <span className="text-primary italic underline decoration-black/20 dark:decoration-primary/20 decoration-wavy underline-offset-4"><TypingAnimation /></span>
         </h1>
         
-        <p className="text-lg md:text-xl text-slate-800 dark:text-slate-400 max-w-2xl mx-auto mb-6 font-medium leading-relaxed">
+        <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-6 font-medium leading-relaxed">
           I'm a passionate developer seeking full-time opportunities in software development, web development, or data analysis. I also build custom websites and digital solutions for clients.
         </p>
         
-        <p className="text-base md:text-lg text-slate-700 dark:text-slate-500 max-w-xl mx-auto mb-10 font-medium">
+        <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-xl mx-auto mb-10 font-medium">
           Clean architecture • Intuitive UX • Reliable engineering
         </p>
         

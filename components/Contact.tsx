@@ -45,7 +45,7 @@ const Contact: React.FC = () => {
           </div>
           <div className="text-center">
             <h2 className="text-2xl font-black mb-2">Nathan Kirton</h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-4">Full-Stack Developer | React | Node.js | TypeScript</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">Full-Stack Developer | React | Node.js | TypeScript</p>
             <a
               href="https://www.linkedin.com/in/nathan-kirton-473621352/"
               target="_blank"
@@ -65,7 +65,7 @@ const Contact: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl font-black mb-2">Get in Touch</h1>
-          <p className="text-slate-700 dark:text-slate-300 mb-8">Have a project in mind? I'd love to hear about it. Fill out the form below or connect on LinkedIn.</p>
+          <p className="text-gray-700 dark:text-gray-300 mb-8">Have a project in mind? I'd love to hear about it. Fill out the form below or connect on LinkedIn.</p>
           
           <form className="bg-white dark:bg-neutral-900 border-4 border-black p-8 rounded" onSubmit={handleSubmit}>
             <label className="block mb-4">

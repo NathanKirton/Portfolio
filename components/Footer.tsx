@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
           <img src="/Icons/MyLogo.png" alt="Nathan's Logo" className="h-24 w-24 object-contain" />
           <div>
             <p className="text-2xl text-white font-black uppercase tracking-widest">Nathan Kirton</p>
-            <p className="text-sm text-slate-500 font-bold uppercase tracking-widest">© 2026 • Full-Stack Developer</p>
+            <p className="text-sm text-gray-400 font-bold uppercase tracking-widest">© 2026 • Full-Stack Developer</p>
           </div>
         </div>
         

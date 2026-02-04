@@ -79,7 +79,7 @@ const Timeline: React.FC = () => {
   return (
     <section id="projects-section" ref={containerRef} className="relative w-full pb-40">
       <div className="max-w-7xl mx-auto px-6 pt-12 z-20 relative">
-        <h2 className="text-4xl md:text-5xl font-black text-black dark:text-white mb-6">Projects</h2>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">Projects</h2>
       </div>
       <div className="absolute inset-0 flex justify-center pointer-events-none z-0">
         <svg
@@ -144,7 +144,7 @@ const Timeline: React.FC = () => {
             <span className="material-symbols-outlined text-4xl font-black">flag</span>
           </div>
 
-          <p className="text-base text-slate-800 dark:text-slate-400 max-w-sm mb-8 font-bold leading-relaxed px-6">
+          <p className="text-base text-gray-700 dark:text-gray-300 max-w-sm mb-8 font-bold leading-relaxed px-6">
             Looking to embark on a new project or collaboration? Or maybe you are a hiring manager seeking a dedicated developer to join your crew. Either way, feel free to drop me a message!
           </p>
 
