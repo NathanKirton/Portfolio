@@ -4,7 +4,7 @@
  * Shows tools, overview, and demo content with animations
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { EXPEDITIONS } from '../constants';
 

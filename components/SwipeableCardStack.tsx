@@ -6,14 +6,11 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const ICON_PATHS = {
-  react: '/Icons/react-svgrepo-com.svg',
-  python: '/Icons/python-svgrepo-com.svg',
-  javascript: '/Icons/javascript-svgrepo-com.svg',
-  html: '/Icons/html-5-svgrepo-com.svg',
-  mongo: '/Icons/mongo-svgrepo-com.svg'
-};
+import ReactIcon from '../Icons/react-svgrepo-com.svg';
+import PythonIcon from '../Icons/python-svgrepo-com.svg';
+import JavaScriptIcon from '../Icons/javascript-svgrepo-com.svg';
+import HTMLIcon from '../Icons/html-5-svgrepo-com.svg';
+import DataIcon from '../Icons/mongo-svgrepo-com.svg';
 
 /**
  * Skill cards displayed in the stack
@@ -24,31 +21,31 @@ const CARD_DATA = [
     id: 1, 
     title: 'React', 
     content: 'Building interactive UIs with component-based architecture and state management.',
-    icon: ICON_PATHS.react
+    icon: ReactIcon
   },
   { 
     id: 2, 
     title: 'Python', 
     content: 'Backend development, data processing, and automation with clean, readable code.',
-    icon: ICON_PATHS.python
+    icon: PythonIcon
   },
   { 
     id: 3, 
     title: 'JavaScript', 
     content: 'Modern ES6+ development for both frontend and full-stack applications.',
-    icon: ICON_PATHS.javascript
+    icon: JavaScriptIcon
   },
   { 
     id: 4, 
     title: 'HTML', 
     content: 'Semantic markup and accessible web structures for responsive, SEO-friendly pages.',
-    icon: ICON_PATHS.html
+    icon: HTMLIcon
   },
   { 
     id: 5,
     title: 'MongoDB',
     content: 'Schema design and document storage for scalable, schema-flexible backends.',
-    icon: ICON_PATHS.mongo
+    icon: DataIcon
   },
 ];
 
@@ -240,10 +237,9 @@ export default function SwipeableCardStack() {
                   transition={ reassembling ? { y: { type: 'spring', stiffness: 400, damping: 28 }, duration, ease: 'easeOut' } : { duration, ease: 'easeOut' } }
                 >
                   {/* Card icon and content */}
-                  <img 
-                    src={card.icon}
-                    alt={`${card.title} icon`}
+                  <div 
                     className="w-20 h-20 mb-4 flex items-center justify-center"
+                    dangerouslySetInnerHTML={{ __html: card.icon }}
                   />
                   <h3 className={`font-black text-3xl mb-3 ${isTop ? 'text-primary' : 'text-gray-900 dark:text-white'}`}>
                     {card.title}
@@ -272,10 +268,9 @@ export default function SwipeableCardStack() {
                   transition={{ duration: 0.4 }}
                   className="w-full max-w-sm h-56 border-4 border-black bg-white dark:bg-neutral-900 shadow-xl flex flex-col items-center justify-center hover:border-primary hover:shadow-2xl transition-all cursor-default"
                 >
-                  <img 
-                    src={card.icon}
-                    alt={`${card.title} icon`}
+                  <div 
                     className="w-20 h-20 mb-4 flex items-center justify-center"
+                    dangerouslySetInnerHTML={{ __html: card.icon }}
                   />
                   <h3 className="font-black text-3xl mb-3 text-gray-900 dark:text-white">
                     {card.title}
