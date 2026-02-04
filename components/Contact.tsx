@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import PhoneIcon from '../Icons/phone-svgrepo-com.svg?raw';
-import EmailIcon from '../Icons/email-1572-svgrepo-com.svg?raw';
+
+const ICON_PATHS = {
+  phone: '/Icons/phone-svgrepo-com.svg',
+  email: '/Icons/email-1572-svgrepo-com.svg'
+};
 
 const Contact: React.FC = () => {
   const [name, setName] = useState('');
@@ -111,11 +114,21 @@ const Contact: React.FC = () => {
           {/* Contact Info Below Form */}
           <div className="mt-8 flex gap-8 justify-center">
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 flex items-center justify-center" style={{ filter: 'brightness(0) invert(1)' }} dangerouslySetInnerHTML={{ __html: PhoneIcon }} />
+              <img 
+                src={ICON_PATHS.phone}
+                alt="Phone icon"
+                className="w-6 h-6"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
               <p className="text-xs font-black text-white">+44 7910-744234</p>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 flex items-center justify-center" style={{ filter: 'brightness(0) invert(1)' }} dangerouslySetInnerHTML={{ __html: EmailIcon }} />
+              <img 
+                src={ICON_PATHS.email}
+                alt="Email icon"
+                className="w-6 h-6"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
               <p className="text-xs font-black text-white">nkirton2005@gmail.com</p>
             </div>
           </div>

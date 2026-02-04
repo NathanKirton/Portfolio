@@ -4,7 +4,7 @@
  * Shows tools, overview, and demo content with animations
  */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { EXPEDITIONS } from '../constants';
 
@@ -15,25 +15,22 @@ interface ProjectDetailProps {
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   // Find project by ID
   const project = EXPEDITIONS.find(p => p.id === projectId);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Handle ESC key to exit fullscreen
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isFullscreen) {
-        setIsFullscreen(false);
-      }
-    };
-    
-    if (isFullscreen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.removeEventListener('keydown', handleEscape);
-        document.body.style.overflow = 'unset';
-      };
+  // Handle opening demo in new window
+  const openDemoInNewWindow = () => {
+    let demoUrl = '';
+    if (projectId === 1) {
+      demoUrl = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
+    } else if (projectId === 3) {
+      demoUrl = 'https://www.move2earn.uk';
+    } else if (projectId === 4) {
+      demoUrl = '/projects/project-4/IronGate Locksmiths/index.html';
     }
-  }, [isFullscreen]);
+    
+    if (demoUrl) {
+      window.open(demoUrl, '_blank', 'width=1200,height=800');
+    }
+  };
 
   // Handle missing project
   if (!project) {
@@ -152,74 +149,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
           </motion.section>
 
           {/* Interactive Environment */}
-          {isFullscreen && (
-            <div 
-              className="fixed top-0 left-0 w-screen h-screen z-[9999] bg-black flex flex-col overflow-hidden"
-              onClick={() => setIsFullscreen(false)}
-            >
-              <div 
-                className="bg-neutral-900 border-b-4 border-primary px-6 py-3 flex items-center justify-between flex-shrink-0"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <h2 className="text-2xl font-black text-white">Interactive Demo</h2>
-                <button
-                  onClick={() => setIsFullscreen(false)}
-                  className="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded font-black text-sm transition-all flex items-center gap-2 border-[2px] border-black shadow-lg"
-                  title="Exit Fullscreen (Esc)"
-                >
-                  <span className="material-symbols-outlined text-base">close</span>
-                  Exit
-                </button>
-              </div>
-              
-              <div 
-                className="flex-1 bg-black overflow-hidden"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {projectId === 1 ? (
-                  (() => {
-                    const rawPath = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
-                    const iframeSrc = encodeURI(rawPath);
-                    return (
-                      <iframe
-                        title={`project-${project.id}-demo`}
-                        src={iframeSrc}
-                        className="w-full h-full"
-                        style={{ border: 'none' }}
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
-                      />
-                    );
-                  })()
-                ) : projectId === 3 ? (
-                  (() => {
-                    return (
-                      <iframe
-                        title={`project-${project.id}-demo`}
-                        src="https://www.move2earn.uk"
-                        className="w-full h-full"
-                        style={{ border: 'none' }}
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
-                      />
-                    );
-                  })()
-                ) : projectId === 4 ? (
-                  (() => {
-                    const iframeSrc = '/projects/project-4/IronGate Locksmiths/index.html';
-                    return (
-                      <iframe
-                        title={`project-${project.id}-demo`}
-                        src={iframeSrc}
-                        className="w-full h-full"
-                        style={{ border: 'none' }}
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
-                      />
-                    );
-                  })()
-                ) : null}
-              </div>
-            </div>
-          )}
-          
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -230,17 +159,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
               <h2 className="text-3xl font-black">Interactive Demo</h2>
               {(projectId === 1 || projectId === 3 || projectId === 4) && (
                 <button
-                  onClick={() => setIsFullscreen(true)}
+                  onClick={openDemoInNewWindow}
                   className="bg-primary text-white px-4 py-2 rounded font-black text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black dark:border-primary"
-                  title="Enter Fullscreen"
+                  title="Open Demo in New Window"
                 >
-                  <span className="material-symbols-outlined text-sm">fullscreen</span>
-                  Fullscreen
+                  <span className="material-symbols-outlined text-sm">open_in_new</span>
+                  Open in New Window
                 </button>
               )}
             </div>
             
-            <div className="bg-white dark:bg-neutral-900 border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden">
+            <div className="bg-black border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden">
                 {projectId === 1 ? (
                   (() => {
                     const rawPath = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
@@ -250,7 +179,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         title={`project-${project.id}-demo`}
                         src={iframeSrc}
                         className="w-full"
-                        style={{ height: 600, border: '0' }}
+                        style={{ height: 600, border: 'none', backgroundColor: '#000000' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
                       />
                     );
@@ -262,7 +191,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         title={`project-${project.id}-demo`}
                         src="https://www.move2earn.uk"
                         className="w-full"
-                        style={{ height: 600, border: '0' }}
+                        style={{ height: 600, border: 'none', backgroundColor: '#000000' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
                     );
@@ -275,7 +204,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         title={`project-${project.id}-demo`}
                         src={iframeSrc}
                         className="w-full"
-                        style={{ height: 700, border: '0' }}
+                        style={{ height: 700, border: 'none', backgroundColor: '#000000' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
                     );
