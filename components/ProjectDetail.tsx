@@ -4,7 +4,7 @@
  * Shows tools, overview, and demo content with animations
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { EXPEDITIONS } from '../constants';
 
@@ -16,6 +16,24 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   // Find project by ID
   const project = EXPEDITIONS.find(p => p.id === projectId);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Handle ESC key to exit fullscreen
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    
+    if (isFullscreen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.removeEventListener('keydown', handleEscape);
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [isFullscreen]);
 
   // Handle missing project
   if (!project) {
@@ -136,26 +154,26 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
           {/* Interactive Environment */}
           {isFullscreen && (
             <div 
-              className="fixed inset-0 z-50 bg-black flex flex-col p-0"
+              className="fixed top-0 left-0 w-screen h-screen z-[9999] bg-black flex flex-col overflow-hidden"
               onClick={() => setIsFullscreen(false)}
             >
               <div 
-                className="bg-neutral-900 border-b-4 border-primary p-4 flex items-center justify-between flex-shrink-0"
+                className="bg-neutral-900 border-b-4 border-primary px-6 py-3 flex items-center justify-between flex-shrink-0"
                 onClick={(e) => e.stopPropagation()}
               >
-                <h2 className="text-3xl font-black text-white">Interactive Demo</h2>
+                <h2 className="text-2xl font-black text-white">Interactive Demo</h2>
                 <button
                   onClick={() => setIsFullscreen(false)}
-                  className="bg-primary text-white px-4 py-2 rounded font-black text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black"
-                  title="Exit Fullscreen"
+                  className="bg-primary hover:bg-primary/90 text-black px-6 py-2 rounded font-black text-sm transition-all flex items-center gap-2 border-[2px] border-black shadow-lg"
+                  title="Exit Fullscreen (Esc)"
                 >
-                  <span className="material-symbols-outlined text-sm">fullscreen_exit</span>
-                  Exit Fullscreen
+                  <span className="material-symbols-outlined text-base">close</span>
+                  Exit
                 </button>
               </div>
               
               <div 
-                className="flex-1 bg-white dark:bg-neutral-900 overflow-hidden"
+                className="flex-1 bg-black overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
                 {projectId === 1 ? (
@@ -167,7 +185,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         title={`project-${project.id}-demo`}
                         src={iframeSrc}
                         className="w-full h-full"
-                        style={{ border: '0' }}
+                        style={{ border: 'none' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
                       />
                     );
@@ -179,7 +197,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         title={`project-${project.id}-demo`}
                         src="https://www.move2earn.uk"
                         className="w-full h-full"
-                        style={{ border: '0' }}
+                        style={{ border: 'none' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
                     );
@@ -192,7 +210,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         title={`project-${project.id}-demo`}
                         src={iframeSrc}
                         className="w-full h-full"
-                        style={{ border: '0' }}
+                        style={{ border: 'none' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
                     );
