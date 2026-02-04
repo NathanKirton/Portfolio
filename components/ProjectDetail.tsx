@@ -167,6 +167,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                     />
                   );
                 })()
+              ) : projectId === 4 ? (
+                (() => {
+                  const iframeSrc = '/projects/project-4/IronGate Locksmiths/index.html';
+                  return (
+                    <iframe
+                      title={`project-${project.id}-demo`}
+                      src={iframeSrc}
+                      className="w-full"
+                      style={{ height: 700, border: '0' }}
+                      sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
+                    />
+                  );
+                })()
               ) : (
                 <div className="p-8 min-h-96 flex items-center justify-center">
                   <div className="text-center">

@@ -45,36 +45,6 @@ export const EXPEDITIONS: Expedition[] = [
     }
   },
   {
-    id: 2,
-    date: 'NOV 2025',
-    tag: 'Project 02 â€¢ Data Visualization',
-    title: 'Analytics Dashboard',
-    description: 'A comprehensive data visualization dashboard built with React and D3.js. Real-time analytics for complex datasets with intuitive UI for data exploration.',
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVj5PccE4-GgLja52X8BshCcK4CLGnv7cjHGkHrmcTk8kzu1GNr7ErNnC-Y6S4fWrm62nKVDVdcGnTsAitKYHNNw0y4wLpmk80cfyZW3qkXHO-Uyimg3CTTLg0cmal2xPruDYVsOxZ5RiwYCnLehyMVa0ypJJ2rTMeZpvPfrZou88ZUd8nZjIYe0emYUxOo7PgLr2udaJ4nPr3snpg98d33930JaXAYb4AIWjHIV_VMmHFRemw5SdkNE8vY8RO2lzaYE2DCDsChvK-',
-    side: 'left',
-    tools: [
-      {
-        name: 'Frontend',
-        items: ['React', 'TypeScript', 'D3.js', 'Recharts', 'Tailwind CSS']
-      },
-      {
-        name: 'Data Processing',
-        items: ['Apache Spark', 'Pandas', 'NumPy', 'Data aggregation pipelines']
-      },
-      {
-        name: 'Backend',
-        items: ['Node.js', 'Express.js', 'PostgreSQL', 'Redis (caching)']
-      },
-      {
-        name: 'Deployment',
-        items: ['AWS EC2', 'Docker', 'CI/CD with GitHub Actions']
-      }
-    ],
-    overview: {
-      sections: 'Add your overview text here. You can paste any text you want into this section.'
-    }
-  },
-  {
     id: 3,
     date: 'JAN 2026',
     tag: 'Move2Earn Project • Project 03',
@@ -118,8 +88,8 @@ export const EXPEDITIONS: Expedition[] = [
     tag: 'Project 04 • Website Redesign',
     title: 'Irongate Locksmiths Modern Redesign',
     description: 'Complete redesign of the Irongate Locksmiths website with modern UI/UX, responsive design, smooth animations, and enhanced functionality. Transformed a dated website into a professional, mobile-friendly platform that maintains all original information while improving user experience and conversion rates.',
-    imageUrl: '/Icons/lock_logo.png',
-    side: 'left',
+    imageUrl: '/Project Screenshots/Irongate Locksmiths.jpg',
+    side: 'right',
     tools: [
       {
         name: 'Frontend',

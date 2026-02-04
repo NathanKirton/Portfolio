@@ -1,0 +1,227 @@
+<!-- Irongate Locksmiths Website Screenshot Generator -->
+<!-- This HTML file can be converted to an image using a screenshot tool -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irongate Locksmiths - Website Screenshot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1d6b2f;
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #1d6b2f 0%, #154620 50%, #2a8a3d 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            animation: moveBackground 20s ease-in-out infinite;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .logo-placeholder {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            font-weight: bold;
+            color: #1d6b2f;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        
+        .phone {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 30px 0;
+            letter-spacing: 2px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: #48a86b;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(72, 168, 107, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #1d6b2f;
+            transform: translateY(-5px);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-text {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="content">
+            <div class="logo-placeholder">🔐</div>
+            
+            <h1>South Shields' Most Trusted Locksmith</h1>
+            <p class="subtitle">Fast, Professional, Affordable Lock Solutions</p>
+            
+            <p class="phone">📱 07546 126613</p>
+            
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 20px; font-size: 1.1rem;">
+                30-minute response time • No call-out fees • From just £44.99
+            </p>
+            
+            <div class="buttons">
+                <button class="btn btn-primary">☎️ Call Emergency</button>
+                <button class="btn btn-secondary">✉️ Get Quote</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-icon">⚡</div>
+                    <span class="stat-value">30 min</span>
+                    <div class="stat-text">Response Time</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">⭐</div>
+                    <span class="stat-value">24/7</span>
+                    <div class="stat-text">Coverage</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-icon">✓</div>
+                    <span class="stat-value">£44.99</span>
+                    <div class="stat-text">Starting From</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
