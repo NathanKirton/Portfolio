@@ -51,7 +51,7 @@ export const EXPEDITIONS: Expedition[] = [
     title: 'Move2Earn Mobile App',
     description: 'Move2Earn is a gamified fitness and screen-time management system that converts real physical activity into earned gaming minutes. Parents manage limits, rewards, and streak settings through a dedicated dashboard, while children track their progress, start timers, and upload activities. The platform integrates with Strava, uses Flask and MongoDB on the backend, and encourages healthier habits by linking movement to meaningful digital rewards.',
     imageUrl: '/Icons/Move2EarnLogo.png',
-    side: 'right',
+    side: 'left',
     tools: [
       {
         name: 'Frontend',
@@ -88,7 +88,7 @@ export const EXPEDITIONS: Expedition[] = [
     tag: 'Project 04 • Website Redesign',
     title: 'Irongate Locksmiths Modern Redesign',
     description: 'Complete redesign of the Irongate Locksmiths website with modern UI/UX, responsive design, smooth animations, and enhanced functionality. Transformed a dated website into a professional, mobile-friendly platform that maintains all original information while improving user experience and conversion rates.',
-    imageUrl: '/Project Screenshots/Irongate Locksmiths.jpg',
+    imageUrl: '/projects/project-4/IronGate Locksmiths/IrongateLocksmiths Screenshot.jpg',
     side: 'right',
     tools: [
       {
