@@ -88,7 +88,7 @@ export const EXPEDITIONS: Expedition[] = [
     tag: 'Project 04 • Website Redesign',
     title: 'Irongate Locksmiths Modern Redesign',
     description: 'Complete redesign of the Irongate Locksmiths website with modern UI/UX, responsive design, smooth animations, and enhanced functionality. Transformed a dated website into a professional, mobile-friendly platform that maintains all original information while improving user experience and conversion rates.',
-    imageUrl: '/projects/project-4/IronGate Locksmiths/IrongateLocksmiths Screenshot.jpg',
+    imageUrl: '/Project Screenshots/IrongateLocksmiths Screenshot.jpg',
     side: 'right',
     tools: [
       {

@@ -15,6 +15,7 @@ interface ProjectDetailProps {
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   // Find project by ID
   const project = EXPEDITIONS.find(p => p.id === projectId);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Handle missing project
   if (!project) {
@@ -137,64 +138,81 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-12"
+            className={`mb-12 ${isFullscreen ? 'fixed inset-0 z-50 p-4 bg-black/90 flex items-center justify-center' : ''}`}
           >
-            <h2 className="text-3xl font-black mb-6">Interactive Demo</h2>
-            <div className="bg-white dark:bg-neutral-900 border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden">
-              {projectId === 1 ? (
-                (() => {
-                  const rawPath = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
-                  const iframeSrc = encodeURI(rawPath);
-                  return (
-                    <iframe
-                      title={`project-${project.id}-demo`}
-                      src={iframeSrc}
-                      className="w-full"
-                      style={{ height: 600, border: '0' }}
-                      sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
-                    />
-                  );
-                })()
-              ) : projectId === 3 ? (
-                (() => {
-                  return (
-                    <iframe
-                      title={`project-${project.id}-demo`}
-                      src="https://www.move2earn.uk"
-                      className="w-full"
-                      style={{ height: 600, border: '0' }}
-                      sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
-                    />
-                  );
-                })()
-              ) : projectId === 4 ? (
-                (() => {
-                  const iframeSrc = '/projects/project-4/IronGate Locksmiths/index.html';
-                  return (
-                    <iframe
-                      title={`project-${project.id}-demo`}
-                      src={iframeSrc}
-                      className="w-full"
-                      style={{ height: 700, border: '0' }}
-                      sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
-                    />
-                  );
-                })()
-              ) : (
-                <div className="p-8 min-h-96 flex items-center justify-center">
-                  <div className="text-center">
-                    <p className="text-slate-700 dark:text-slate-300 mb-4">
-                      The interactive demo environment will be loaded here. Project files should be placed in:
-                    </p>
-                    <code className="block bg-black/5 dark:bg-white/5 p-4 rounded font-mono text-sm mb-4 text-left">
-                      /public/projects/project-{project.id}/
-                    </code>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">
-                      Upload your project files to this folder for interactive demonstration.
-                    </p>
+            <div className={`w-full ${isFullscreen ? 'max-w-7xl h-full' : ''}`}>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-3xl font-black">Interactive Demo</h2>
+                {(projectId === 1 || projectId === 3 || projectId === 4) && (
+                  <button
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                    className="bg-primary text-white px-4 py-2 rounded font-black text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black dark:border-primary"
+                    title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+                  >
+                    <span className="material-symbols-outlined text-sm">
+                      {isFullscreen ? 'fullscreen_exit' : 'fullscreen'}
+                    </span>
+                    {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+                  </button>
+                )}
+              </div>
+              
+              <div className={`${isFullscreen ? 'bg-white dark:bg-neutral-900 border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden h-[calc(100vh-120px)]' : 'bg-white dark:bg-neutral-900 border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden'}`}>
+                {projectId === 1 ? (
+                  (() => {
+                    const rawPath = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
+                    const iframeSrc = encodeURI(rawPath);
+                    return (
+                      <iframe
+                        title={`project-${project.id}-demo`}
+                        src={iframeSrc}
+                        className="w-full"
+                        style={{ height: isFullscreen ? '100%' : 600, border: '0' }}
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
+                      />
+                    );
+                  })()
+                ) : projectId === 3 ? (
+                  (() => {
+                    return (
+                      <iframe
+                        title={`project-${project.id}-demo`}
+                        src="https://www.move2earn.uk"
+                        className="w-full"
+                        style={{ height: isFullscreen ? '100%' : 600, border: '0' }}
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
+                      />
+                    );
+                  })()
+                ) : projectId === 4 ? (
+                  (() => {
+                    const iframeSrc = '/projects/project-4/IronGate Locksmiths/index.html';
+                    return (
+                      <iframe
+                        title={`project-${project.id}-demo`}
+                        src={iframeSrc}
+                        className="w-full"
+                        style={{ height: isFullscreen ? '100%' : 700, border: '0' }}
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
+                      />
+                    );
+                  })()
+                ) : (
+                  <div className="p-8 min-h-96 flex items-center justify-center">
+                    <div className="text-center">
+                      <p className="text-slate-700 dark:text-slate-300 mb-4">
+                        The interactive demo environment will be loaded here. Project files should be placed in:
+                      </p>
+                      <code className="block bg-black/5 dark:bg-white/5 p-4 rounded font-mono text-sm mb-4 text-left">
+                        /public/projects/project-{project.id}/
+                      </code>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Upload your project files to this folder for interactive demonstration.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </motion.section>
 
