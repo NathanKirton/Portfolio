@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
 import ProjectDetail from './components/ProjectDetail';
+import AllProjects from './components/AllProjects';
 
 const App: React.FC = () => {
   // State for current route based on URL hash
@@ -25,9 +26,20 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  // Ensure page is scrolled to top on route change (prevents jumping to embedded demo)
+  useEffect(() => {
+    // Defer slightly to let content render, then force top
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+  }, [route]);
+
   // Route detection
   const isAbout = route === '#about';
   const isContact = route === '#contact';
+  const isAllProjects = route === '#projects';
   const isProject = route.startsWith('#project/');
   const projectId = isProject ? parseInt(route.split('/')[1], 10) : null;
 
@@ -45,6 +57,8 @@ const App: React.FC = () => {
         <About />
       ) : isContact ? (
         <Contact />
+      ) : isAllProjects ? (
+        <AllProjects />
       ) : isProject && projectId ? (
         <ProjectDetail projectId={projectId} />
       ) : (

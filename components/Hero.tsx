@@ -34,7 +34,7 @@ const TypingAnimation: React.FC = () => {
   }, [displayText, roleIndex, isDeleting]);
 
   return (
-    <span className="inline-block min-w-[300px] text-left">
+    <span className="inline-block min-w-[160px] md:min-w-[300px] text-4xl md:text-7xl text-left leading-tight">
       {displayText}
       <span className="animate-pulse">|</span>
     </span>

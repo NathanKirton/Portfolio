@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e9e4d9">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a140d">
     <title>Nathan's Portfolio</title>
     <link rel="icon" type="image/png" href="/Icons/MyLogo.png" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -33,6 +35,8 @@
         body {
             font-family: "Space Grotesk", sans-serif;
             background-color: #e9e4d9;
+            padding-bottom: constant(safe-area-inset-bottom);
+            padding-bottom: env(safe-area-inset-bottom);
         }
         .dark body {
             background-color: #1a140d;

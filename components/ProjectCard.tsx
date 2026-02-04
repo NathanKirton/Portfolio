@@ -72,7 +72,22 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ expedition, onInViewChange })
                 VIEW PROJECT <span className="material-symbols-outlined text-xs font-black">lock</span>
               </span>
             ) : (
-              <a className="inline-flex items-center gap-2 text-black dark:text-primary font-black hover:gap-4 transition-all uppercase text-[9px] tracking-[0.2em] cursor-pointer" href="#" onClick={(e) => { e.preventDefault(); window.location.hash = `#project/${expedition.id}`; }}>
+              <a
+                className="inline-flex items-center gap-2 text-black dark:text-primary font-black hover:gap-4 transition-all uppercase text-[9px] tracking-[0.2em] cursor-pointer"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Navigate to project route and ensure page scrolls to top
+                  window.location.hash = `#project/${expedition.id}`;
+                  // Defer scroll to allow route change/render to occur, then force top
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+                    // Also try resetting document scroll for some browsers
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                  }, 0);
+                }}
+              >
                 VIEW PROJECT <span className="material-symbols-outlined text-xs font-black">arrow_forward</span>
               </a>
             )}

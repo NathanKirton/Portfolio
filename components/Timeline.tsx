@@ -61,9 +61,12 @@ const Timeline: React.FC = () => {
 
   const [visibleMap, setVisibleMap] = useState<Record<number, boolean>>({});
 
-  const markers = markerPoints.slice(0, EXPEDITIONS.length).map((pt, i) => {
-    const exp = EXPEDITIONS[i];
-    const threshold = (i + 1) / (EXPEDITIONS.length + 1);
+  // Render timeline so the most recent projects appear at the top
+  const reversedExpeditions = [...EXPEDITIONS].slice().reverse();
+
+  const markers = markerPoints.slice(0, reversedExpeditions.length).map((pt, i) => {
+    const exp = reversedExpeditions[i];
+    const threshold = (i + 1) / (reversedExpeditions.length + 1);
     const isVisible = !!visibleMap[exp.id];
 
     return (
@@ -74,7 +77,10 @@ const Timeline: React.FC = () => {
   });
 
   return (
-    <section ref={containerRef} className="relative w-full pb-40">
+    <section id="projects-section" ref={containerRef} className="relative w-full pb-40">
+      <div className="max-w-7xl mx-auto px-6 pt-12 z-20 relative">
+        <h2 className="text-4xl md:text-5xl font-black text-black dark:text-white mb-6">Projects</h2>
+      </div>
       <div className="absolute inset-0 flex justify-center pointer-events-none z-0">
         <svg
           className="w-full max-w-[1000px] h-full overflow-visible"
@@ -107,7 +113,7 @@ const Timeline: React.FC = () => {
       </div>
 
       <div className="relative flex flex-col pt-10">
-        {EXPEDITIONS.map((exp) => (
+        {reversedExpeditions.map((exp) => (
           <ProjectCard
             key={exp.id}
             expedition={exp}
@@ -116,6 +122,16 @@ const Timeline: React.FC = () => {
             }
           />
         ))}
+
+        {/* View all button under the last project */}
+        <div className="flex items-center justify-center mt-8">
+          <button
+            onClick={() => (window.location.hash = '#projects')}
+            className="bg-transparent text-black dark:text-white px-8 py-3 rounded-none font-black text-lg flex items-center justify-center gap-3 hover:bg-black hover:text-white dark:hover:bg-primary dark:hover:text-background-dark transition-all border-[3px] border-black dark:border-primary"
+          >
+            VIEW ALL
+          </button>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
