@@ -13,50 +13,52 @@ document.addEventListener('DOMContentLoaded', () => {
 const state = {
     currentPage: 'home',
     mobileMenuOpen: false,
+    heroReactive: true,
+    selectedService: 'locksmith',
     services: [
-        { icon: '🔓', title: 'Emergency Lockouts', description: 'Fast 30-minute response time for locked doors and lost keys' },
-        { icon: '🏠', title: 'Residential Locks', description: 'Door locks, window locks, and security upgrades for homes' },
-        { icon: '🚐', title: 'Van Locks', description: 'Professional van lock installation and repairs' },
-        { icon: '🏢', title: 'Commercial Services', description: 'Business security systems and access control' },
-        { icon: '🔧', title: 'Lock Repairs', description: 'Repair and maintenance for all lock types' },
-        { icon: '🛡️', title: 'UPVC Repairs', description: 'UPVC door and window repairs and adjustments' }
+        { icon: '🔓', title: 'Emergency Lockouts', description: 'Fast 30-minute response time for locked doors, lost keys, and emergency access' },
+        { icon: '🏠', title: 'Residential Locks', description: 'Door locks, window locks, UPVC repairs, and home security upgrades' },
+        { icon: '🚐', title: 'Van Locks - Van Saint', description: 'Professional van lock installation, deadlocks, slam locks, and security hardware' },
+        { icon: '🏢', title: 'Commercial Services', description: 'Business security systems, access control, and commercial lock maintenance' },
+        { icon: '🔧', title: 'Lock Repairs', description: 'Repair and maintenance for all lock types with fast response times' },
+        { icon: '🛡️', title: 'Van Security', description: 'Complete van security solutions for tradespeople and fleet operators' }
     ],
     testimonials: [
         {
             name: 'Frankie Bolder',
-            text: 'Big thumbs up. If you\'re in need of an honest, professional, and reliable low cost local Locksmith Service, then look no further than Irongate Locksmiths. I\'ve relied on the friendly guys from Irongate Locksmiths on numerous occasions, and have yet to be disappointed.',
+            text: 'Big thumbs up. If you\'re in need of an honest, professional, and reliable low cost local Locksmith Service, then look no further than Irongate Locksmiths. I\'ve relied on the friendly guys on numerous occasions.',
             rating: 5
         },
         {
-            name: 'Sarah Johnson',
-            text: 'Excellent service! Simon was professional and arrived quickly. Sorted our issue in no time. Definitely recommend to anyone needing a locksmith in South Shields.',
+            name: 'Local Tradesman',
+            text: 'Excellent van lock service. Very professional and quick. Have used Van Saint multiple times for van security upgrades. Highly recommend for any tradesperson.',
             rating: 5
         },
         {
-            name: 'Michael Harris',
-            text: 'Very competitive prices and great service. They didn\'t try to upsell us like other locksmiths. Will definitely use again.',
+            name: 'South Shields Resident',
+            text: 'Fast response time, professional service, and great value. Simon and team are local and genuinely care about helping the community. Best locksmith in the area!',
             rating: 5
         }
     ],
     pricingOptions: [
         {
-            name: 'Basic Lockout',
+            name: 'Emergency Lockout',
             price: '£44.99',
-            details: 'Starting from',
-            features: ['Emergency access', '30-min response', 'Local call', 'No call-out fee', 'Professional service']
+            details: 'Quick access solution',
+            features: ['30-min response', 'Emergency access', 'Local call', 'No hidden fees', '24/7 available']
         },
         {
             name: 'Lock Installation',
             price: '£65',
-            details: 'Lock + 3 keys + service',
-            features: ['Professional fit', 'Quality locks', 'Full service', 'Includes 3 keys', 'Free advice'],
+            details: 'Locks + 3 keys + service',
+            features: ['Professional fit', 'Quality locks', 'Full service', 'Includes 3 keys', 'Expert fitting'],
             featured: true
         },
         {
-            name: 'Home Package',
+            name: 'Van Security Package',
             price: '£99',
-            details: 'Full door service',
-            features: ['Multiple locks', 'Free door service', 'Security check', 'Expert fitting', 'Best value']
+            details: 'Complete van protection',
+            features: ['Multiple locks', 'Deadlocks fitted', 'High security', 'Professional install', 'Van Saint branded']
         }
     ]
 };
@@ -108,26 +110,68 @@ function renderNavbar() {
 function renderHero() {
     return `
         <section class="hero" id="home">
+            <div class="hero-background">
+                <div class="hero-animated-bg"></div>
+            </div>
             <div class="hero-content">
-                <div class="emergency-badge">
+                <div class="service-toggle">
+                    <button class="toggle-btn ${state.selectedService === 'locksmith' ? 'active' : ''}" onclick="toggleService('locksmith')">
+                        <i class="fas fa-lock"></i> Locksmith
+                    </button>
+                    <button class="toggle-btn ${state.selectedService === 'van' ? 'active' : ''}" onclick="toggleService('van')">
+                        <i class="fas fa-van-shuttle"></i> Van Locks
+                    </button>
+                </div>
+                
+                <div class="emergency-badge bounce-animation">
                     <i class="fas fa-bell"></i>
                     24/7 Emergency Service
                 </div>
-                <h1>South Shields' Most Trusted Locksmith</h1>
-                <p class="hero-subtitle">Fast, Professional, Affordable Lock Solutions</p>
-                <p class="phone-display">
+                
+                <h1 class="hero-title slide-in">
+                    ${state.selectedService === 'locksmith' 
+                        ? "South Shields' Most Trusted Locksmith" 
+                        : 'Van Security Experts - Van Saint'}
+                </h1>
+                
+                <p class="hero-subtitle fade-in">
+                    ${state.selectedService === 'locksmith' 
+                        ? 'Fast, Professional, Affordable Lock Solutions' 
+                        : 'Keep Your Tools Safe - Professional Van Lock Installation'}
+                </p>
+                
+                <p class="phone-display pulse-animation">
                     <i class="fas fa-phone-alt"></i> 07546 126613
                 </p>
-                <p style="color: rgba(255,255,255,0.9); margin-bottom: 2rem; font-size: 1.1rem;">
-                    30-minute response time • No call-out fees • From just £44.99
+                
+                <p class="hero-tagline">
+                    ${state.selectedService === 'locksmith' 
+                        ? '30-minute response time • No call-out fees • From just £44.99' 
+                        : 'Mobile van lock fitting • High-security solutions • Fleet coverage'}
                 </p>
+                
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="window.location.href='tel:07546126613'">
-                        <i class="fas fa-phone"></i> Call Emergency
+                    <button class="btn-primary pulse-btn" onclick="window.location.href='tel:07546126613'">
+                        <i class="fas fa-phone"></i> Call Now
                     </button>
-                    <a href="#contact" class="btn-secondary">
+                    <a href="#contact" class="btn-secondary glow-btn">
                         <i class="fas fa-envelope"></i> Get Quote
                     </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-text"><strong>30 min</strong><br>Response</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-text"><strong>24/7</strong><br>Coverage</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-icon">✓</div>
+                        <div class="stat-text"><strong>£44.99</strong><br>From</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -497,6 +541,14 @@ function updateHamburgerIcon() {
             spans[2].style.transform = '';
         }
     }
+}
+
+// Toggle between locksmith and van lock services
+function toggleService(service) {
+    state.selectedService = service;
+    renderApp();
+    setupEventListeners();
+    setupScrollAnimations();
 }
 
 // Form submission
