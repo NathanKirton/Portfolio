@@ -46,10 +46,10 @@ const App: React.FC = () => {
   const projectId = isProject ? parseInt(route.split('/')[1], 10) : null;
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden selection:bg-primary selection:text-white">
+    <div className="relative z-20 min-h-screen overflow-x-hidden selection:bg-primary selection:text-white">
       {/* Decorative texture overlays */}
-      <div className="fixed inset-0 vintage-overlay z-[100] pointer-events-none" />
-      <div className="fixed inset-0 map-texture opacity-40 z-[1] pointer-events-none" />
+      <div className="fixed inset-0 vintage-overlay z-0 pointer-events-none" />
+      <div className="fixed inset-0 map-texture opacity-40 z-0 pointer-events-none" />
 
       {/* Main navigation and header */}
       <Header />
