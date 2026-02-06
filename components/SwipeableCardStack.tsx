@@ -16,7 +16,7 @@ const ICON_PATHS = {
 };
 
 /**
- * Skill cards displayed in the stack
+ * Skill cards displayed in 4the stack
  * Each card represents a technology/skill with icon and description
  */
 const CARD_DATA = [

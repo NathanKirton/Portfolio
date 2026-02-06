@@ -14,6 +14,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import ProjectDetail from './components/ProjectDetail';
 import AllProjects from './components/AllProjects';
+import Blog from './components/Blog';
 
 const App: React.FC = () => {
   // State for current route based on URL hash
@@ -39,6 +40,7 @@ const App: React.FC = () => {
   // Route detection
   const isAbout = route === '#about';
   const isContact = route === '#contact';
+  const isBlog = route === '#blog';
   const isAllProjects = route === '#projects';
   const isProject = route.startsWith('#project/');
   const projectId = isProject ? parseInt(route.split('/')[1], 10) : null;
@@ -57,6 +59,8 @@ const App: React.FC = () => {
         <About />
       ) : isContact ? (
         <Contact />
+      ) : isBlog ? (
+        <Blog />
       ) : isAllProjects ? (
         <AllProjects />
       ) : isProject && projectId ? (

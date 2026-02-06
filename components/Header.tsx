@@ -17,7 +17,7 @@ const Header: React.FC = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           <a className="text-[10px] font-black hover:text-primary transition-colors uppercase tracking-[0.2em] text-gray-700 dark:text-gray-200" href="#about">About me</a>
-          <a className="text-[10px] font-black hover:text-primary transition-colors uppercase tracking-[0.2em] text-gray-700 dark:text-gray-200" href="#contact">Contact</a>
+          <a className="text-[10px] font-black hover:text-primary transition-colors uppercase tracking-[0.2em] text-gray-700 dark:text-gray-200" href="#blog">Blog</a>
           <a className="border-2 border-gray-700 dark:border-primary hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-background-dark text-gray-700 dark:text-primary px-3 py-1.5 rounded font-black text-[10px] transition-all uppercase tracking-widest" href="/resume/Nathan_Kirtons_CV.pdf" download>
             CV
           </a>
@@ -51,10 +51,10 @@ const Header: React.FC = () => {
             </a>
             <a 
               className="text-sm font-black hover:text-primary transition-colors uppercase tracking-widest text-gray-700 dark:text-gray-200 block py-2" 
-              href="#contact"
+              href="#blog"
               onClick={closeMenu}
             >
-              Contact
+              Blog
             </a>
             <a 
               className="text-sm font-black hover:text-primary transition-colors uppercase tracking-widest text-gray-700 dark:text-gray-200 block py-2 border-b border-black/10 dark:border-primary/10 pb-3" 

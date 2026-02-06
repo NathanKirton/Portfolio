@@ -1,45 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-
-const roles = ['Web Developer', 'Full Stack Developer', 'Software Developer', 'Data Analyst'];
-
-const TypingAnimation: React.FC = () => {
-  const [displayText, setDisplayText] = useState('');
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentRole = roles[roleIndex];
-    const speed = isDeleting ? 50 : 100;
-    const targetText = isDeleting ? '' : currentRole;
-
-    const timer = setTimeout(() => {
-      if (isDeleting) {
-        setDisplayText(displayText.slice(0, -1));
-        if (displayText.length === 0) {
-          setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
-        }
-      } else {
-        if (displayText.length < currentRole.length) {
-          setDisplayText(currentRole.slice(0, displayText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 1500);
-        }
-      }
-    }, speed);
-
-    return () => clearTimeout(timer);
-  }, [displayText, roleIndex, isDeleting]);
-
-  return (
-    <span className="inline-block min-w-[160px] md:min-w-[300px] text-4xl md:text-7xl text-left leading-tight">
-      {displayText}
-      <span className="animate-pulse">|</span>
-    </span>
-  );
-};
+import { SOCIALS } from '../constants';
 
 const Hero: React.FC = () => {
   return (
@@ -56,7 +18,7 @@ const Hero: React.FC = () => {
         </div>
         
         <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tighter text-gray-900 dark:text-white">
-          <span className="text-primary italic underline decoration-black/20 dark:decoration-primary/20 decoration-wavy underline-offset-4"><TypingAnimation /></span>
+          <span className="text-primary italic decoration-black/20 dark:decoration-primary/20 underline-offset-4">Software Developer</span>
         </h1>
         
         <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-6 font-medium leading-relaxed">
@@ -85,6 +47,15 @@ const Hero: React.FC = () => {
           >
             VIEW PROJECTS
           </button>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-6">
+          <a href={SOCIALS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <img src="/Icons/github-142-svgrepo-com.svg" alt="GitHub" className="h-8 w-8" />
+          </a>
+          <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="/Icons/linkedin-linked-in-svgrepo-com.svg" alt="LinkedIn" className="h-8 w-8" />
+          </a>
         </div>
       </motion.div>
     </section>
