@@ -23,7 +23,15 @@ const LinkedInBlogCards: React.FC = () => {
         const res = await fetch('/api/get-linkedin-posts');
         if (!res.ok) throw new Error(`Failed to fetch posts: ${res.status}`);
         const data = await res.json();
-        setPosts(data.elements || []);
+        // Filter out known test posts (e.g., Zapier automated test) so they don't appear in the public blog
+        const raw = data.elements || [];
+        const cleaned = raw.filter((p: any) => {
+          const url = (p.url || '').toString();
+          const text = (p.text || '').toString();
+          if (url.includes('automated-test') || text.includes('Test post from Zapier')) return false;
+          return true;
+        });
+        setPosts(cleaned as LinkedInPost[]);
       } catch (err: any) {
         setError(err.message || 'Failed to load posts');
         setPosts([]);
@@ -38,7 +46,7 @@ const LinkedInBlogCards: React.FC = () => {
   if (loading) {
     return (
       <div className="py-20 md:py-28 max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-black mb-6 text-white">Blog</h2>
+        <h2 className="text-3xl font-black mb-6 text-white opacity-100">Blog</h2>
         <div className="text-center text-gray-400">Loading posts…</div>
       </div>
     );
@@ -47,7 +55,7 @@ const LinkedInBlogCards: React.FC = () => {
   if (error) {
     return (
       <div className="py-20 md:py-28 max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-black mb-6 text-white">Blog</h2>
+        <h2 className="text-3xl font-black mb-6 text-white opacity-100">Blog</h2>
         <div className="bg-red-900/20 border border-red-500 text-red-400 p-4 rounded">
           Error loading posts: {error}
         </div>
@@ -58,7 +66,7 @@ const LinkedInBlogCards: React.FC = () => {
   if (posts.length === 0) {
     return (
       <div className="py-20 md:py-28 max-w-5xl mx-auto px-6">
-        <h2 className="text-3xl font-black mb-6 text-white">Blog</h2>
+        <h2 className="text-3xl font-black mb-6 text-white opacity-100">Blog</h2>
         <div className="text-center text-gray-400">No posts yet. Check back soon!</div>
       </div>
     );
@@ -66,13 +74,12 @@ const LinkedInBlogCards: React.FC = () => {
 
   return (
     <section className="py-20 md:py-28 max-w-5xl mx-auto px-6">
-      <h2 className="text-3xl font-black mb-6 text-white">Blog</h2>
+      <h2 className="text-3xl font-black mb-6 text-white opacity-100">Blog</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
         {posts.map((post) => (
           <article
             key={post.id}
-            className="flex flex-col h-full p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white bg-opacity-100 dark:bg-gray-900 dark:bg-opacity-100 text-gray-900 dark:text-gray-100 hover:shadow-lg transition-shadow"
-            style={{ backdropFilter: 'none' }}
+            className="flex flex-col h-full p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:shadow-lg transition-shadow"
           >
             {post.image && (
               <div className="mb-4 overflow-hidden rounded h-48 bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
