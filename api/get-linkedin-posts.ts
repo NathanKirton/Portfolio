@@ -2,7 +2,7 @@
 // Fetches LinkedIn posts from Supabase for the Blog page
 // Returns array of posts ordered by date (newest first)
 
-import { supabase } from '../lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -10,28 +10,20 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Debug: log environment and client state
+    // Lazy-create Supabase client to avoid module-level import issues during bundling
     console.log('GET /api/get-linkedin-posts called');
-    console.log('Supabase URL:', process.env.SUPABASE_URL ? '✓ set' : '✗ missing');
-    console.log('Supabase Key:', process.env.SUPABASE_SERVICE_ROLE_KEY ? '✓ set (length: ' + process.env.SUPABASE_SERVICE_ROLE_KEY.length + ')' : '✗ missing');
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || '';
 
-    if (!supabase) {
-      console.error('ERROR: Supabase client is null/undefined');
-      return res.status(500).json({ 
-        error: 'Database client not initialized',
-        elements: []
-      });
+    console.log('Supabase URL present:', !!supabaseUrl);
+    console.log('Supabase Key present:', !!supabaseKey);
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('ERROR: Missing Supabase credentials in environment');
+      return res.status(500).json({ error: 'Database credentials missing', elements: [] });
     }
 
-    if (!supabase.from) {
-      console.error('ERROR: Supabase client does not have .from() method');
-      return res.status(500).json({ 
-        error: 'Database client not properly initialized',
-        elements: []
-      });
-    }
-
-    console.log('Attempting to query linkedin_posts table...');
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Fetch posts from Supabase, ordered by date (newest first)
     const { data, error } = await supabase

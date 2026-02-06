@@ -3,7 +3,7 @@
 // Usage: POST to this endpoint with Zapier integration
 // Header required: x-api-key matching ZAPIER_SECRET
 
-import { supabase } from '../lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -26,11 +26,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Debug: check if Supabase is initialized
-    if (!supabase || !supabase.from) {
-      console.error('Supabase client not initialized');
-      return res.status(500).json({ error: 'Database client not initialized' });
+    // Lazy-create Supabase client to avoid module-level import issues during bundling
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || '';
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Missing supabase credentials');
+      return res.status(500).json({ error: 'Database credentials not configured' });
     }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Upsert to handle duplicates (unique constraint on url)
     const { data, error } = await supabase.from('linkedin_posts').upsert(
