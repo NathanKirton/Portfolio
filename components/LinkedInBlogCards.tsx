@@ -69,7 +69,11 @@ const LinkedInBlogCards: React.FC = () => {
       <h2 className="text-3xl font-black mb-6 text-white">Blog</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
         {posts.map((post) => (
-          <article key={post.id} className="flex flex-col h-full p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:shadow-lg transition-shadow">
+          <article
+            key={post.id}
+            className="flex flex-col h-full p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white bg-opacity-100 dark:bg-gray-900 dark:bg-opacity-100 text-gray-900 dark:text-gray-100 hover:shadow-lg transition-shadow"
+            style={{ backdropFilter: 'none' }}
+          >
             {post.image && (
               <div className="mb-4 overflow-hidden rounded h-48 bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
                 <img src={post.image} alt="post" className="w-full h-full object-cover" />
@@ -80,7 +84,7 @@ const LinkedInBlogCards: React.FC = () => {
                 <span className="text-sm text-gray-400">Video content</span>
               </div>
             )}
-            <h3 className="font-bold mb-2 text-base line-clamp-3 flex-grow">
+            <h3 className="font-bold mb-2 text-base line-clamp-3 flex-grow text-gray-900 dark:text-gray-100">
               {post.text && post.text.length > 200 ? `${post.text.slice(0, 200)}…` : post.text}
             </h3>
             <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
