@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   // Validate API key from header
   const apiKey = req.headers['x-api-key'];
-  const expectedSecret = process.env.VITE_ZAPIER_SECRET || process.env.ZAPIER_SECRET;
+  const expectedSecret = process.env.ZAPIER_SECRET;
 
   if (!apiKey || apiKey !== expectedSecret) {
     return res.status(401).json({ error: 'Unauthorized: invalid or missing x-api-key header' });
@@ -26,6 +26,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Debug: check if Supabase is initialized
+    if (!supabase || !supabase.from) {
+      console.error('Supabase client not initialized');
+      return res.status(500).json({ error: 'Database client not initialized' });
+    }
+
     // Upsert to handle duplicates (unique constraint on url)
     const { data, error } = await supabase.from('linkedin_posts').upsert(
       {
@@ -39,13 +45,13 @@ export default async function handler(req, res) {
     );
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error('Supabase upsert error:', error);
       return res.status(500).json({ error: 'Failed to store post', details: error.message });
     }
 
     return res.status(200).json({ success: true, data });
   } catch (err) {
-    console.error('Server error:', err);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error('Server error in linkedin-post:', err);
+    return res.status(500).json({ error: 'Internal server error', details: (err as any).message });
   }
 }
