@@ -94,10 +94,8 @@ const Blog: React.FC = () => {
 
   return (
     <section className="py-20 md:py-28 max-w-4xl mx-auto px-6">
-      <h2 className="text-3xl font-black mb-6">Blog</h2>
-      {!token || !personUrn ? (
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4">Please configure your LinkedIn credentials (see README).</div>
-      ) : error ? (
+      <h2 className="text-3xl font-black mb-6 text-white">Blog</h2>
+      {error ? (
         <div className="text-red-600">Error loading LinkedIn posts: {error}</div>
       ) : !posts ? (
         <div>Loading posts…</div>
