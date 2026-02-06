@@ -118,8 +118,8 @@ export const EXPEDITIONS: Expedition[] = [
 
 // Social links used across the site. Replace these with your real profile URLs.
 export const SOCIALS = {
-  github: 'https://github.com/your-username',
-  linkedin: 'https://www.linkedin.com/in/your-profile'
+  github: 'https://github.com/NathanKirton',
+  linkedin: 'https://www.linkedin.com/in/nathan-kirton-473621352/'
 };
 
 
