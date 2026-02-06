@@ -3,7 +3,7 @@
 // Usage: POST to this endpoint with Zapier integration
 // Header required: x-api-key matching ZAPIER_SECRET
 
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../lib/supabase';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
