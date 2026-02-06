@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { SOCIALS } from '../constants';
 
 /**
  * Blog page
@@ -25,12 +26,20 @@ const Blog: React.FC = () => {
   const personUrn = (process.env.REACT_APP_LINKEDIN_PERSON_URN || process.env.VITE_LINKEDIN_PERSON_URN) as string | undefined;
 
   useEffect(() => {
-    if (!token || !personUrn) {
-      setError('LinkedIn feed not configured. Set REACT_APP_LINKEDIN_TOKEN and REACT_APP_LINKEDIN_PERSON_URN.');
-      return;
-    }
+    const fetchFromProxy = async () => {
+      try {
+        const res = await fetch('/api/linkedin/posts');
+        if (!res.ok) return null;
+        const data = await res.json();
+        // support both { elements: [...] } and direct array
+        return data.elements || data;
+      } catch (e) {
+        return null;
+      }
+    };
 
-    const fetchPosts = async () => {
+    const fetchDirect = async () => {
+      if (!token || !personUrn) return null;
       try {
         const encoded = encodeURIComponent(`List(${personUrn})`);
         const url = `https://api.linkedin.com/v2/ugcPosts?q=authors&authors=${encoded}&count=10`;
@@ -45,14 +54,29 @@ const Blog: React.FC = () => {
           throw new Error(`LinkedIn API error: ${res.status} ${text}`);
         }
         const data = await res.json();
-        // data.elements is the array of posts
-        setPosts(data.elements || []);
+        return data.elements || [];
       } catch (err: any) {
-        setError(err.message || String(err));
+        throw err;
       }
     };
 
-    fetchPosts();
+    (async () => {
+      try {
+        // Try proxy first (recommended). If not available, fallback to direct fetch if token provided.
+        let elements = await fetchFromProxy();
+        if (!elements) {
+          if (!token || !personUrn) {
+            setError('LinkedIn feed not configured. Add a server proxy at /api/linkedin/posts or set REACT_APP_LINKEDIN_TOKEN and REACT_APP_LINKEDIN_PERSON_URN.');
+            return;
+          }
+          elements = await fetchDirect();
+        }
+
+        setPosts(elements || []);
+      } catch (err: any) {
+        setError(err.message || String(err));
+      }
+    })();
   }, [token, personUrn]);
 
   return (
@@ -68,19 +92,34 @@ const Blog: React.FC = () => {
         <div>No posts found.</div>
       ) : (
         <div className="grid gap-6">
-          {posts.map((p, i) => (
-            <article key={i} className="p-4 border rounded shadow-sm">
-              <h3 className="font-bold mb-2">{p.specificContent?.['com.linkedin.ugc.ShareContent']?.shareCommentary?.text || 'LinkedIn Post'}</h3>
-              <div className="text-sm text-gray-600">{new Date(p.created?.time || Date.now()).toLocaleString()}</div>
-              {/* Try to show media if present */}
-              {p.specificContent?.['com.linkedin.ugc.ShareContent']?.shareMedia && (
-                <div className="mt-2">
-                  {/* This is a simplification; media handling may need more code */}
-                  <em>Contains media</em>
+          {posts.map((p, i) => {
+            const content = p.specificContent?.['com.linkedin.ugc.ShareContent'] || {};
+            const text = content.shareCommentary?.text || '';
+            const created = p.created?.time || p.createdAt || null;
+            const mediaArr = Array.isArray(content.shareMedia) ? content.shareMedia : [];
+            const firstMedia = mediaArr[0]?.media || mediaArr[0]?.originalUrl || null;
+            // Try to derive a linkedIn post URL if possible, otherwise link to profile
+            const postId = p.id || p['id'] || null;
+            const postUrl = postId ? `https://www.linkedin.com/feed/update/${encodeURIComponent(postId)}` : SOCIALS.linkedin;
+
+            return (
+              <article key={i} className="p-6 border rounded-lg shadow-md bg-white dark:bg-background-dark">
+                {firstMedia && (
+                  <div className="mb-4">
+                    <img src={firstMedia} alt="post media" className="w-full h-48 object-cover rounded" />
+                  </div>
+                )}
+                <h3 className="font-bold mb-2 text-lg">{text ? (text.length > 180 ? `${text.slice(0, 180)}…` : text) : 'LinkedIn Post'}</h3>
+                {text && text.length > 180 && (
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{text}</p>
+                )}
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-600">{created ? new Date(created).toLocaleString() : ''}</div>
+                  <a href={postUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">View on LinkedIn</a>
                 </div>
-              )}
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       )}
     </section>
