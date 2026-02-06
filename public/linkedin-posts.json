@@ -1,0 +1,33 @@
+{
+  "elements": [
+    {
+      "id": "urn:li:activity:1",
+      "created": { "time": 1700000000000 },
+      "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+          "shareCommentary": { "text": "Excited to share my latest project: Move2Earn — gamified fitness for families. Built with Flask and MongoDB." },
+          "shareMedia": [ { "media": "/Icons/Move2EarnLogo.png" } ]
+        }
+      }
+    },
+    {
+      "id": "urn:li:activity:2",
+      "created": { "time": 1699000000000 },
+      "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+          "shareCommentary": { "text": "Wrote about clean architecture in small teams — patterns that helped us deliver faster." }
+        }
+      }
+    },
+    {
+      "id": "urn:li:activity:3",
+      "created": { "time": 1698000000000 },
+      "specificContent": {
+        "com.linkedin.ugc.ShareContent": {
+          "shareCommentary": { "text": "Released a new portfolio update — take a look at the redesigned UI and project showcase." },
+          "shareMedia": [ { "media": "/Icons/MyLogo.png" } ]
+        }
+      }
+    }
+  ]
+}

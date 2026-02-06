@@ -26,6 +26,18 @@ const Blog: React.FC = () => {
   const personUrn = (process.env.REACT_APP_LINKEDIN_PERSON_URN || process.env.VITE_LINKEDIN_PERSON_URN) as string | undefined;
 
   useEffect(() => {
+    const fetchFromPublicJson = async () => {
+      try {
+        const res = await fetch('/linkedin-posts.json');
+        if (!res.ok) return null;
+        const data = await res.json();
+        // allow either { elements: [...] } or direct array
+        return data.elements || data;
+      } catch (e) {
+        return null;
+      }
+    };
+
     const fetchFromProxy = async () => {
       try {
         const res = await fetch('/api/linkedin/posts');
@@ -62,8 +74,9 @@ const Blog: React.FC = () => {
 
     (async () => {
       try {
-        // Try proxy first (recommended). If not available, fallback to direct fetch if token provided.
-        let elements = await fetchFromProxy();
+        // Try public JSON first, then proxy, then direct (recommended flow when avoiding API usage in frontend).
+        let elements = await fetchFromPublicJson();
+        if (!elements) elements = await fetchFromProxy();
         if (!elements) {
           if (!token || !personUrn) {
             setError('LinkedIn feed not configured. Add a server proxy at /api/linkedin/posts or set REACT_APP_LINKEDIN_TOKEN and REACT_APP_LINKEDIN_PERSON_URN.');
