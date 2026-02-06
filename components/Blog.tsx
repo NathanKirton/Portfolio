@@ -114,21 +114,21 @@ const Blog: React.FC = () => {
             const postUrl = postId ? `https://www.linkedin.com/feed/update/${encodeURIComponent(postId)}` : SOCIALS.linkedin;
 
             return (
-              <article key={i} className="p-6 border rounded-lg shadow-md bg-white dark:bg-background-dark">
-                {firstMedia && (
-                  <div className="mb-4">
-                    <img src={firstMedia} alt="post media" className="w-full h-48 object-cover rounded" />
+              <article key={i} className="p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                  {firstMedia && (
+                    <div className="mb-4 overflow-hidden rounded">
+                      <img src={firstMedia} alt="post media" className="w-full h-48 object-cover rounded" />
+                    </div>
+                  )}
+                  <h3 className="font-bold mb-2 text-lg">{text ? (text.length > 180 ? `${text.slice(0, 180)}…` : text) : 'LinkedIn Post'}</h3>
+                  {text && text.length > 180 && (
+                    <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{text}</p>
+                  )}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">{created ? new Date(created).toLocaleString() : ''}</div>
+                    <a href={postUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">View on LinkedIn</a>
                   </div>
-                )}
-                <h3 className="font-bold mb-2 text-lg">{text ? (text.length > 180 ? `${text.slice(0, 180)}…` : text) : 'LinkedIn Post'}</h3>
-                {text && text.length > 180 && (
-                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{text}</p>
-                )}
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-gray-600">{created ? new Date(created).toLocaleString() : ''}</div>
-                  <a href={postUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">View on LinkedIn</a>
-                </div>
-              </article>
+                </article>
             );
           })}
         </div>
