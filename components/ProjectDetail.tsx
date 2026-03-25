@@ -4,31 +4,217 @@
  * Shows tools, overview, and demo content with animations
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { EXPEDITIONS } from '../constants';
+import { EXPEDITIONS, SOCIALS } from '../constants';
 
 interface ProjectDetailProps {
   projectId: number;
 }
 
+interface RepoContentItem {
+  type: 'file' | 'dir';
+  name: string;
+  path: string;
+  size?: number;
+  download_url?: string | null;
+}
+
+interface RepoExplorerState {
+  loading: boolean;
+  error: string | null;
+  owner: string;
+  repo: string;
+  branch: string;
+  stars: number;
+  description: string;
+  currentPath: string;
+  items: RepoContentItem[];
+  readmeText: string;
+}
+
+const INITIAL_REPO_STATE: RepoExplorerState = {
+  loading: false,
+  error: null,
+  owner: '',
+  repo: '',
+  branch: 'main',
+  stars: 0,
+  description: '',
+  currentPath: '',
+  items: [],
+  readmeText: '',
+};
+
+const parseGitHubRepo = (url: string): { owner: string; repo: string } | null => {
+  const match = url.match(/^https?:\/\/github\.com\/([^/]+)\/([^/#?]+)/i);
+  if (!match) return null;
+  return {
+    owner: match[1],
+    repo: match[2].replace(/\.git$/i, ''),
+  };
+};
+
+const decodeBase64Utf8 = (base64: string): string => {
+  try {
+    const binary = atob(base64.replace(/\n/g, ''));
+    const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return '';
+  }
+};
+
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
+  const [activeView, setActiveView] = useState<'demo' | 'repo'>('demo');
+  const [repoState, setRepoState] = useState<RepoExplorerState>(INITIAL_REPO_STATE);
+
   // Find project by ID
   const project = EXPEDITIONS.find(p => p.id === projectId);
 
+  const demoUrl = useMemo(() => {
+    if (projectId === 1) {
+      return '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
+    }
+    if (projectId === 3) {
+      return 'https://www.move2earn.uk';
+    }
+    if (projectId === 4) {
+      return 'http://localhost:3001';
+    }
+    return '';
+  }, [projectId]);
+
+  const githubRepoUrl = useMemo(() => {
+    if (projectId === 3) {
+      return 'https://github.com/NathanKirton/move2earn-backend';
+    }
+    if (projectId === 4) {
+      return 'https://github.com/NathanKirton/IronGateLocksmiths';
+    }
+    if (projectId === 1) {
+      return SOCIALS.github;
+    }
+    return '';
+  }, [projectId]);
+
+  const repoMeta = useMemo(() => {
+    if (!githubRepoUrl) return null;
+    return parseGitHubRepo(githubRepoUrl);
+  }, [githubRepoUrl]);
+
+  useEffect(() => {
+    const loadRepoOverview = async () => {
+      if (activeView !== 'repo' || !repoMeta) {
+        return;
+      }
+
+      setRepoState(prev => ({
+        ...INITIAL_REPO_STATE,
+        loading: true,
+        owner: repoMeta.owner,
+        repo: repoMeta.repo,
+      }));
+
+      try {
+        const repoInfoResp = await fetch(`https://api.github.com/repos/${repoMeta.owner}/${repoMeta.repo}`);
+        if (!repoInfoResp.ok) {
+          throw new Error('Could not load repository metadata.');
+        }
+        const repoInfo = await repoInfoResp.json();
+
+        const [rootResp, readmeResp] = await Promise.all([
+          fetch(`https://api.github.com/repos/${repoMeta.owner}/${repoMeta.repo}/contents`),
+          fetch(`https://api.github.com/repos/${repoMeta.owner}/${repoMeta.repo}/readme`),
+        ]);
+
+        if (!rootResp.ok) {
+          throw new Error('Could not load repository files.');
+        }
+
+        const rootItems = (await rootResp.json()) as RepoContentItem[];
+        let readmeText = '';
+
+        if (readmeResp.ok) {
+          const readmeData = await readmeResp.json();
+          if (typeof readmeData?.content === 'string') {
+            readmeText = decodeBase64Utf8(readmeData.content);
+          }
+        }
+
+        setRepoState({
+          loading: false,
+          error: null,
+          owner: repoMeta.owner,
+          repo: repoMeta.repo,
+          branch: repoInfo.default_branch || 'main',
+          stars: typeof repoInfo.stargazers_count === 'number' ? repoInfo.stargazers_count : 0,
+          description: repoInfo.description || '',
+          currentPath: '',
+          items: rootItems,
+          readmeText,
+        });
+      } catch (error) {
+        setRepoState(prev => ({
+          ...prev,
+          loading: false,
+          error: error instanceof Error ? error.message : 'Unable to load repository.',
+        }));
+      }
+    };
+
+    loadRepoOverview();
+  }, [activeView, repoMeta]);
+
+  const loadRepoPath = async (path: string) => {
+    if (!repoMeta) return;
+    setRepoState(prev => ({ ...prev, loading: true, error: null }));
+
+    try {
+      const encodedPath = path
+        .split('/')
+        .map(segment => encodeURIComponent(segment))
+        .join('/');
+      const resp = await fetch(`https://api.github.com/repos/${repoMeta.owner}/${repoMeta.repo}/contents/${encodedPath}`);
+
+      if (!resp.ok) {
+        throw new Error('Could not open this folder.');
+      }
+
+      const data = await resp.json();
+      const items = Array.isArray(data) ? (data as RepoContentItem[]) : [];
+      setRepoState(prev => ({
+        ...prev,
+        loading: false,
+        currentPath: path,
+        items,
+      }));
+    } catch (error) {
+      setRepoState(prev => ({
+        ...prev,
+        loading: false,
+        error: error instanceof Error ? error.message : 'Unable to load folder contents.',
+      }));
+    }
+  };
+
+  const openParentPath = () => {
+    if (!repoState.currentPath) return;
+    const segments = repoState.currentPath.split('/');
+    segments.pop();
+    void loadRepoPath(segments.join('/'));
+  };
+
   // Handle opening demo in new window
   const openDemoInNewWindow = () => {
-    let demoUrl = '';
-    if (projectId === 1) {
-      demoUrl = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
-    } else if (projectId === 3) {
-      demoUrl = 'https://www.move2earn.uk';
-    } else if (projectId === 4) {
-      demoUrl = '/projects/project-4/IronGate Locksmiths/index.html';
-    }
-    
     if (demoUrl) {
       window.open(demoUrl, '_blank', 'width=1200,height=800');
+    }
+  };
+
+  const openRepoInNewWindow = () => {
+    if (githubRepoUrl) {
+      window.open(githubRepoUrl, '_blank', 'width=1200,height=800');
     }
   };
 
@@ -155,60 +341,182 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mb-12"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-3xl font-black">Interactive Demo</h2>
-              {(projectId === 1 || projectId === 3 || projectId === 4) && (
-                <button
-                  onClick={openDemoInNewWindow}
-                  className="bg-primary text-white px-4 py-2 rounded font-black text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black dark:border-primary"
-                  title="Open Demo in New Window"
-                >
-                  <span className="material-symbols-outlined text-sm">open_in_new</span>
-                  Open in New Window
-                </button>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <h2 className="text-3xl font-black">Interactive Environment</h2>
+              {demoUrl && (
+                <div className="relative bg-black rounded-full p-1 border-2 border-black dark:border-primary flex items-center">
+                  <motion.div
+                    className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-primary rounded-full"
+                    animate={{ x: activeView === 'demo' ? '0%' : '100%' }}
+                    transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+                  />
+                  <button
+                    onClick={() => setActiveView('demo')}
+                    className={`relative z-10 px-4 py-1.5 text-xs md:text-sm font-black uppercase tracking-wide transition-colors ${
+                      activeView === 'demo' ? 'text-white' : 'text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    Live Demo
+                  </button>
+                  <button
+                    onClick={() => setActiveView('repo')}
+                    className={`relative z-10 px-4 py-1.5 text-xs md:text-sm font-black uppercase tracking-wide transition-colors ${
+                      activeView === 'repo' ? 'text-white' : 'text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    GitHub Repo
+                  </button>
+                </div>
               )}
             </div>
-            
-            <div className="bg-black border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden">
-                {projectId === 1 ? (
-                  (() => {
-                    const rawPath = '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
-                    const iframeSrc = encodeURI(rawPath);
-                    return (
+
+            <div className="relative left-1/2 right-1/2 w-screen -translate-x-1/2 px-4 md:px-8">
+              <div className="bg-black border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden">
+                {activeView === 'demo' && demoUrl ? (
+                  <>
+                    <div className="flex justify-end p-3 bg-black/70 border-b border-white/10">
+                      <button
+                        onClick={openDemoInNewWindow}
+                        className="bg-primary text-white px-4 py-2 rounded font-black text-xs md:text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black dark:border-primary"
+                        title="Open Demo in New Window"
+                      >
+                        <span className="material-symbols-outlined text-sm">open_in_new</span>
+                        Open Demo
+                      </button>
+                    </div>
+
+                    {projectId === 1 ? (
+                      (() => {
+                        const iframeSrc = encodeURI(demoUrl);
+                        return (
+                          <iframe
+                            title={`project-${project.id}-demo`}
+                            src={iframeSrc}
+                            className="w-full"
+                            style={{ height: '75vh', minHeight: 600, border: 'none', backgroundColor: '#000000' }}
+                            sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
+                          />
+                        );
+                      })()
+                    ) : projectId === 3 ? (
                       <iframe
                         title={`project-${project.id}-demo`}
-                        src={iframeSrc}
+                        src={demoUrl}
                         className="w-full"
-                        style={{ height: 600, border: 'none', backgroundColor: '#000000' }}
-                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
-                      />
-                    );
-                  })()
-                ) : projectId === 3 ? (
-                  (() => {
-                    return (
-                      <iframe
-                        title={`project-${project.id}-demo`}
-                        src="https://www.move2earn.uk"
-                        className="w-full"
-                        style={{ height: 600, border: 'none', backgroundColor: '#000000' }}
+                        style={{ height: '75vh', minHeight: 600, border: 'none', backgroundColor: '#000000' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
-                    );
-                  })()
-                ) : projectId === 4 ? (
-                  (() => {
-                    const iframeSrc = '/projects/project-4/IronGate Locksmiths/index.html';
-                    return (
+                    ) : projectId === 4 ? (
                       <iframe
                         title={`project-${project.id}-demo`}
-                        src={iframeSrc}
+                        src={demoUrl}
                         className="w-full"
-                        style={{ height: 700, border: 'none', backgroundColor: '#000000' }}
+                        style={{ height: '80vh', minHeight: 700, border: 'none', backgroundColor: '#000000' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
-                    );
-                  })()
+                    ) : null}
+                  </>
+                ) : activeView === 'repo' && githubRepoUrl ? (
+                  <div className="min-h-[72vh] bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
+                    <div className="border-b border-white/10 p-4 md:p-5 flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-primary font-black mb-1">Source Code</p>
+                        <h3 className="text-xl md:text-2xl font-black">
+                          {repoState.owner && repoState.repo ? `${repoState.owner}/${repoState.repo}` : 'GitHub Repository'}
+                        </h3>
+                        {repoState.description && (
+                          <p className="text-slate-300 text-sm mt-1">{repoState.description}</p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="text-xs uppercase tracking-wide text-slate-400 border border-white/20 rounded-full px-3 py-1">
+                          {repoState.branch ? `Branch: ${repoState.branch}` : 'Branch: main'}
+                        </div>
+                        <div className="text-xs uppercase tracking-wide text-slate-400 border border-white/20 rounded-full px-3 py-1">
+                          Stars: {repoState.stars}
+                        </div>
+                        <button
+                          onClick={openRepoInNewWindow}
+                          className="bg-primary text-white px-4 py-2 rounded font-black text-xs md:text-sm hover:shadow-lg transition-all inline-flex items-center gap-2 border-[2px] border-black"
+                        >
+                          <img src="/Icons/github-142-svgrepo-com.svg" alt="GitHub" className="w-4 h-4 invert" />
+                          Open in GitHub
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-[1.2fr_1fr] min-h-[58vh]">
+                      <div className="border-r border-white/10 p-4 md:p-5">
+                        <div className="flex items-center justify-between gap-3 mb-3">
+                          <p className="text-xs uppercase tracking-[0.15em] text-slate-400">
+                            {repoState.currentPath ? `/${repoState.currentPath}` : '/'}
+                          </p>
+                          <button
+                            onClick={openParentPath}
+                            disabled={!repoState.currentPath || repoState.loading}
+                            className="text-xs font-black uppercase tracking-wide px-3 py-1.5 border border-white/20 rounded disabled:opacity-40"
+                          >
+                            Up One Level
+                          </button>
+                        </div>
+
+                        {repoState.loading ? (
+                          <div className="h-[44vh] flex items-center justify-center text-slate-300 text-sm">Loading repository files...</div>
+                        ) : repoState.error ? (
+                          <div className="h-[44vh] flex items-center justify-center text-red-300 text-sm">{repoState.error}</div>
+                        ) : (
+                          <div className="h-[44vh] overflow-auto rounded border border-white/10 bg-black/30">
+                            <ul className="divide-y divide-white/5">
+                              {repoState.items
+                                .slice()
+                                .sort((a, b) => {
+                                  if (a.type !== b.type) {
+                                    return a.type === 'dir' ? -1 : 1;
+                                  }
+                                  return a.name.localeCompare(b.name);
+                                })
+                                .map(item => (
+                                  <li key={item.path}>
+                                    {item.type === 'dir' ? (
+                                      <button
+                                        onClick={() => void loadRepoPath(item.path)}
+                                        className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors flex items-center justify-between"
+                                      >
+                                        <span className="font-medium text-slate-100">📁 {item.name}</span>
+                                        <span className="text-xs uppercase text-slate-500">Folder</span>
+                                      </button>
+                                    ) : (
+                                      <a
+                                        href={`${githubRepoUrl}/blob/${repoState.branch}/${item.path}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors flex items-center justify-between"
+                                      >
+                                        <span className="font-medium text-slate-200">📄 {item.name}</span>
+                                        <span className="text-xs uppercase text-slate-500">File</span>
+                                      </a>
+                                    )}
+                                  </li>
+                                ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-4 md:p-5">
+                        <p className="text-xs uppercase tracking-[0.15em] text-slate-400 mb-3">README Preview</p>
+                        <div className="h-[44vh] overflow-auto rounded border border-white/10 bg-black/30 p-4">
+                          {repoState.readmeText ? (
+                            <pre className="whitespace-pre-wrap text-sm leading-relaxed text-slate-200 font-mono">
+                              {repoState.readmeText.slice(0, 7000)}
+                            </pre>
+                          ) : (
+                            <p className="text-slate-400 text-sm">README preview unavailable for this repository.</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <div className="p-8 min-h-96 flex items-center justify-center">
                     <div className="text-center">
@@ -224,6 +532,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                     </div>
                   </div>
                 )}
+              </div>
             </div>
           </motion.section>
 

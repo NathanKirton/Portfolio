@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #22311a;
+  --shell-gradient: radial-gradient(circle at top, rgba(66, 116, 21, 0.1), transparent 36%), linear-gradient(180deg, #ffffff 0%, #f8fbf5 62%, #f4f8ef 100%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+}
+
+.dark {
+  --background: #0f1310;
+  --foreground: #f3f6ef;
+  --shell-gradient: radial-gradient(circle at top, rgba(66, 116, 21, 0.2), transparent 36%), linear-gradient(180deg, #0e1510 0%, #131d14 62%, #0f1610 100%);
+}
+
+* {
+  border-color: rgb(148 163 184 / 0.12);
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+.app-shell {
+  background: var(--shell-gradient);
+}
+
+.light .text-white {
+  color: #1f2937 !important;
+}
+
+.dark .text-white {
+  color: #f8fafc !important;
+}
+
+.light .text-slate-300,
+.light .text-slate-200 {
+  color: #4b5563 !important;
+}
+
+.dark .text-slate-300,
+.dark .text-slate-200 {
+  color: #cbd5e1 !important;
+}
+
+.light .text-slate-400,
+.light .text-slate-500 {
+  color: #6b7280 !important;
+}
+
+.dark .text-slate-400,
+.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+.light .text-cyan-100,
+.light .text-cyan-200,
+.light .text-cyan-300,
+.dark .text-cyan-100,
+.dark .text-cyan-200,
+.dark .text-cyan-300 {
+  color: #427415 !important;
+}
+
+.light .bg-cyan-400,
+.dark .bg-cyan-400 {
+  background-color: #427415 !important;
+}
+
+.light .bg-slate-950,
+.light .bg-slate-950\/60,
+.light .bg-slate-950\/70,
+.light .bg-slate-900\/70,
+.light .bg-slate-900\/80,
+.light .bg-white\/5,
+.light .bg-white\/8 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.dark .bg-slate-950,
+.dark .bg-slate-950\/60,
+.dark .bg-slate-950\/70,
+.dark .bg-slate-900\/70,
+.dark .bg-slate-900\/80,
+.dark .bg-white\/5,
+.dark .bg-white\/8 {
+  background-color: rgba(14, 20, 15, 0.86) !important;
+}
+
+.light .border-white\/10,
+.light .border-white\/15,
+.light .border-cyan-400\/20,
+.light .border-cyan-400\/30,
+.light .border-cyan-400\/40 {
+  border-color: rgba(66, 116, 21, 0.22) !important;
+}
+
+.dark .border-white\/10,
+.dark .border-white\/15,
+.dark .border-cyan-400\/20,
+.dark .border-cyan-400\/30,
+.dark .border-cyan-400\/40 {
+  border-color: rgba(118, 160, 78, 0.32) !important;
+}
+
+.light .shadow-\[0_20px_80px_rgba\(2\,12\,27\,0\.45\)\],
+.light .shadow-\[0_30px_120px_rgba\(0\,0\,0\,0\.45\)\],
+.light .shadow-\[0_30px_80px_rgba\(0\,0\,0\,0\.5\)\],
+.light .shadow-\[0_12px_30px_rgba\(0\,212\,255\,0\.25\)\] {
+  box-shadow: 0 20px 70px rgba(66, 116, 21, 0.14) !important;
+}
+
+.dark .shadow-\[0_20px_80px_rgba\(2\,12\,27\,0\.45\)\],
+.dark .shadow-\[0_30px_120px_rgba\(0\,0\,0\,0\.45\)\],
+.dark .shadow-\[0_30px_80px_rgba\(0\,0\,0\,0\.5\)\],
+.dark .shadow-\[0_12px_30px_rgba\(0\,212\,255\,0\.25\)\] {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36) !important;
+}
+
+a {
+  text-underline-offset: 4px;
+}
+
+::selection {
+  background: rgb(66 116 21 / 0.22);
+}
+
+.container-shell {
+  margin-inline: auto;
+  width: min(100%, 80rem);
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-shell {
+    padding-inline: 2rem;
+  }
+}

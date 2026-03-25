@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const ICON_PATHS = {
   phone: '/Icons/phone-svgrepo-com.svg',
@@ -8,6 +8,14 @@ const ICON_PATHS = {
 
 
 const Contact: React.FC = () => {
+  const contactRef = React.useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: contactRef,
+    offset: ['start end', 'end start'],
+  });
+  const leftY = useTransform(scrollYProgress, [0, 1], [35, -25]);
+  const rightY = useTransform(scrollYProgress, [0, 1], [15, -35]);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -22,11 +30,13 @@ const Contact: React.FC = () => {
 
   return (
     <main className="relative z-10 py-28 px-6">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div ref={contactRef} className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* LinkedIn Section */}
         <motion.div
+          style={{ y: leftY }}
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center gap-6"
         >
@@ -64,9 +74,11 @@ const Contact: React.FC = () => {
 
         {/* Contact Form Section */}
         <motion.div
+          style={{ y: rightY }}
           initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
         >
           <h1 className="text-4xl font-black mb-2">Get in Touch</h1>
           <p className="text-gray-700 dark:text-gray-300 mb-8">Have a project in mind? I'd love to hear about it. Fill out the form below or connect on LinkedIn.</p>

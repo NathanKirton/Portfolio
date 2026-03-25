@@ -6,13 +6,17 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/lib/supabase';
 
 const ICON_PATHS = {
   react: '/Icons/react-svgrepo-com.svg',
   python: '/Icons/python-svgrepo-com.svg',
   javascript: '/Icons/javascript-svgrepo-com.svg',
   html: '/Icons/html-5-svgrepo-com.svg',
-  mongo: '/Icons/mongo-svgrepo-com.svg'
+  mongo: '/Icons/mongo-svgrepo-com.svg',
+  supabase: '/Icons/supabase-ar21.svg',
+  docker: '/Icons/docker-icon.svg',
+  flask: '/Icons/palletsprojects_flask-ar21~v2.svg'
 };
 
 /**
@@ -50,6 +54,24 @@ const CARD_DATA = [
     content: 'Schema design and document storage for scalable, schema-flexible backends.',
     icon: ICON_PATHS.mongo
   },
+  { 
+    id: 6,
+    title: 'Supabase',
+    content: 'Backend as a service platform providing authentication, database, and storage solutions.',
+    icon: ICON_PATHS.supabase
+  },
+  { 
+    id: 7,
+    title: 'Docker',
+    content: 'Containerization platform for building, shipping, and running applications in isolated environments.',
+    icon: ICON_PATHS.docker
+  },
+  { 
+    id: 8,
+    title: 'Flask',
+    content: 'Lightweight web framework for building scalable and maintainable web applications.',
+    icon: ICON_PATHS.flask
+  }
 ];
 
 /**

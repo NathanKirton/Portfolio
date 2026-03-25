@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { SOCIALS } from '../constants';
 
 interface LinkedInPost {
@@ -74,11 +75,38 @@ const LinkedInBlogCards: React.FC = () => {
 
   return (
     <section className="py-20 md:py-28 max-w-5xl mx-auto px-6">
-      <h2 className="text-3xl font-black mb-6 text-white opacity-100">Blog</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
+      <motion.h2
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.5 }}
+        className="text-3xl font-black mb-6 text-white opacity-100"
+      >
+        Blog
+      </motion.h2>
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={{
+          hidden: { opacity: 0 },
+          show: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.08,
+            },
+          },
+        }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max"
+      >
         {posts.map((post) => (
-          <article
+          <motion.article
             key={post.id}
+            variants={{
+              hidden: { opacity: 0, y: 24, scale: 0.98 },
+              show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45 } },
+            }}
+            whileHover={{ y: -6, transition: { duration: 0.2 } }}
             className="flex flex-col h-full p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:shadow-lg transition-shadow"
           >
             {post.image && (
@@ -102,9 +130,9 @@ const LinkedInBlogCards: React.FC = () => {
                 Read More
               </a>
             </div>
-          </article>
+          </motion.article>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

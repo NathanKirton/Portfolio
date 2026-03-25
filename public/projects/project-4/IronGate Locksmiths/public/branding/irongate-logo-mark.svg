@@ -1,0 +1,17 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Irongate shield badge</title>
+  <desc id="desc">Transparent shield logo with green key and leaf style strokes.</desc>
+  <defs>
+    <linearGradient id="leafGreen" x1="200" y1="38" x2="322" y2="355" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5A8D23"/>
+      <stop offset="1" stop-color="#427415"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M257 45C197 80 134 90 88 94V225C88 351 167 450 272 491C377 450 456 351 456 225V94C410 90 347 80 287 45Z" fill="white" stroke="#1D1E21" stroke-width="26" stroke-linejoin="round"/>
+  <path d="M272 96C228 126 183 136 143 140V227C143 317 199 390 272 433C345 390 401 317 401 227V140C361 136 316 126 272 96Z" fill="white"/>
+  <path d="M338 82C274 133 239 230 217 317C198 390 145 430 76 460" stroke="url(#leafGreen)" stroke-width="44" stroke-linecap="round"/>
+  <path d="M421 89C319 149 267 273 242 396C226 490 184 552 117 594" stroke="url(#leafGreen)" stroke-width="33" stroke-linecap="round"/>
+  <path d="M288 227L359 305M359 305L413 248M359 305L438 375" stroke="#427415" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="439" cy="375" r="28" stroke="#427415" stroke-width="19" fill="white"/>
+</svg>

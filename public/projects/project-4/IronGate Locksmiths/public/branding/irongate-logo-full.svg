@@ -1,0 +1,25 @@
+<svg width="1320" height="360" viewBox="0 0 1320 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Irongate South Shields Locksmith Service logo</title>
+  <desc id="desc">Transparent background full logo with shield badge and green wordmark.</desc>
+  <defs>
+    <linearGradient id="leafGreen" x1="130" y1="22" x2="205" y2="210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5A8D23"/>
+      <stop offset="1" stop-color="#427415"/>
+    </linearGradient>
+    <filter id="softDrop" x="0" y="0" width="360" height="360" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="5" flood-color="#000000" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#softDrop)">
+    <path d="M122 34C92 55 60 61 37 63V141C37 215 84 273 146 298C208 273 255 215 255 141V63C232 61 200 55 170 34Z" fill="white" stroke="#1D1E21" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M146 67C124 83 102 88 82 90V142C82 196 116 239 146 257C176 239 210 196 210 142V90C190 88 168 83 146 67Z" fill="white"/>
+    <path d="M180 58C148 84 130 125 119 177C108 228 82 255 47 270" stroke="url(#leafGreen)" stroke-width="25" stroke-linecap="round"/>
+    <path d="M222 62C171 92 145 143 132 205C124 252 103 283 69 302" stroke="url(#leafGreen)" stroke-width="19" stroke-linecap="round"/>
+    <path d="M157 141L193 181M193 181L220 152M193 181L232 217" stroke="#427415" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="233" cy="217" r="15" stroke="#427415" stroke-width="11" fill="white"/>
+  </g>
+
+  <text x="290" y="188" fill="#427415" font-family="Inter, Arial, sans-serif" font-size="170" font-weight="900" letter-spacing="1">IRONGATE</text>
+  <text x="294" y="266" fill="#101115" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="1">SOUTH SHIELDS LOCKSMITH SERVICE</text>
+</svg>
