@@ -91,7 +91,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return 'https://www.move2earn.uk';
     }
     if (projectId === 4) {
-      return isLocalPreview ? 'http://127.0.0.1:3001' : deployedProject4Url || '';
+      return isLocalPreview
+        ? 'http://127.0.0.1:3001'
+        : deployedProject4Url || '/projects/project-4/IronGate%20Locksmiths/index.html';
     }
     return '';
   }, [projectId]);
