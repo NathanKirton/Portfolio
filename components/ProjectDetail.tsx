@@ -92,7 +92,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
     if (projectId === 4) {
       return isLocalPreview
         ? 'http://127.0.0.1:3001'
-        : '/projects/project-4/Irongate%20Locksmiths/index.html';
+        : '/projects/project-4/IronGate%20Locksmiths/index.html';
     }
     return '';
   }, [projectId]);
@@ -291,39 +291,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
               className="w-full h-full object-cover"
             />
           </div>
-
-          {project.galleryImages && project.galleryImages.length > 0 && (
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="mb-12"
-            >
-              <div className="flex items-center justify-between gap-4 mb-5">
-                <h2 className="text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Branding &amp; Project Assets</h2>
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Company identity</span>
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                {project.galleryImages.map((image) => (
-                  <div
-                    key={image.src}
-                    className="rounded-lg overflow-hidden border-4 border-black dark:border-primary bg-[#fffcf5] dark:bg-neutral-900 shadow-lg"
-                  >
-                    <div className="h-56 bg-gradient-to-br from-[#f8f3e8] to-[#ece5d6] dark:from-neutral-900 dark:to-neutral-800">
-                      <img
-                        src={encodeAssetUrl(image.src)}
-                        alt={image.alt}
-                        className={`w-full h-full ${image.fit === 'contain' ? 'object-contain p-6' : 'object-cover'}`}
-                      />
-                    </div>
-                    <div className="p-4 border-t-2 border-black/10 dark:border-primary/20">
-                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">{image.alt}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.section>
-          )}
 
           {/* Tools Used */}
           <motion.section
