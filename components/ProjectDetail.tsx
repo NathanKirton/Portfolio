@@ -82,7 +82,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
 
   const demoUrl = useMemo(() => {
     const isLocalPreview = typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname);
-    const deployedProject4Url = import.meta.env.VITE_PROJECT4_DEMO_URL;
+    const deployedProject4Url = import.meta.env.VITE_PROJECT4_DEMO_URL || 'https://irongate-locksmiths-project4.vercel.app';
 
     if (projectId === 1) {
       return '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
@@ -91,9 +91,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return 'https://www.move2earn.uk';
     }
     if (projectId === 4) {
-      return isLocalPreview
-        ? 'http://127.0.0.1:3001'
-        : deployedProject4Url || '/projects/project-4/IronGate%20Locksmiths/index.html';
+      return isLocalPreview ? 'http://127.0.0.1:3001' : deployedProject4Url;
     }
     return '';
   }, [projectId]);
