@@ -82,6 +82,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
 
   const demoUrl = useMemo(() => {
     const isLocalPreview = typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname);
+    const deployedProject4Url = import.meta.env.VITE_PROJECT4_DEMO_URL;
 
     if (projectId === 1) {
       return '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
@@ -90,9 +91,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return 'https://www.move2earn.uk';
     }
     if (projectId === 4) {
-      return isLocalPreview
-        ? 'http://127.0.0.1:3001'
-        : '/projects/project-4/IronGate%20Locksmiths/index.html';
+      return isLocalPreview ? 'http://127.0.0.1:3001' : deployedProject4Url || '';
     }
     return '';
   }, [projectId]);
@@ -534,15 +533,28 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                 ) : (
                   <div className="p-8 min-h-96 flex items-center justify-center">
                     <div className="text-center">
-                      <p className="text-slate-700 dark:text-slate-300 mb-4">
-                        The interactive demo environment will be loaded here. Project files should be placed in:
-                      </p>
-                      <code className="block bg-black/5 dark:bg-white/5 p-4 rounded font-mono text-sm mb-4 text-left">
-                        /public/projects/project-{project.id}/
-                      </code>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Upload your project files to this folder for interactive demonstration.
-                      </p>
+                      {projectId === 4 ? (
+                        <>
+                          <p className="text-slate-700 dark:text-slate-300 mb-4">
+                            Project 4 interactive demo is available locally at <strong>http://127.0.0.1:3001</strong>.
+                          </p>
+                          <p className="text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+                            To show the same interactive experience on your live portfolio, deploy the Next.js app and set <code>VITE_PROJECT4_DEMO_URL</code> in your portfolio host environment to that deployed URL.
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-slate-700 dark:text-slate-300 mb-4">
+                            The interactive demo environment will be loaded here. Project files should be placed in:
+                          </p>
+                          <code className="block bg-black/5 dark:bg-white/5 p-4 rounded font-mono text-sm mb-4 text-left">
+                            /public/projects/project-{project.id}/
+                          </code>
+                          <p className="text-sm text-slate-600 dark:text-slate-400">
+                            Upload your project files to this folder for interactive demonstration.
+                          </p>
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
