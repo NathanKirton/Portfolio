@@ -16,6 +16,9 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ expedition, onInViewChange }) => {
   // Determine card alignment based on project side property
   const isRight = expedition.side === 'right';
+  const cardImageSrc = encodeURI(expedition.cardImageUrl || expedition.imageUrl);
+  const cardImageAlt = expedition.cardImageAlt || expedition.imageAlt || expedition.title;
+  const cardImageFit = expedition.cardImageFit || 'cover';
 
   return (
     <div className={`flex flex-col md:flex-row items-center relative group w-full mb-32 md:mb-52 ${isRight ? 'justify-end md:pr-[15%]' : 'justify-start md:pl-[15%]'}`}>
@@ -38,10 +41,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ expedition, onInViewChange })
         {/* Main card body with responsive shadows and hover effects */}
         <div className={`bg-[#fffcf5] dark:bg-neutral-900 rounded-none overflow-hidden border-[4px] border-black dark:border-primary transition-all duration-300 hover:-translate-y-2 relative ${isRight ? 'shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] dark:shadow-[10px_10px_0px_0px_rgba(242,127,13,0.3)] hover:-translate-x-1' : 'shadow-[-10px_10px_0px_0px_rgba(0,0,0,1)] dark:shadow-[-10px_10px_0px_0px_rgba(242,127,13,0.3)] hover:translate-x-1'}`}>
           {/* Project image with hover effect to remove grayscale filter */}
-          <div 
-            className="h-44 bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-500"
-            style={{ backgroundImage: `url('${expedition.imageUrl}')` }}
-          />
+          <div className="h-44 bg-gradient-to-br from-[#f8f3e8] to-[#ece5d6] dark:from-neutral-900 dark:to-neutral-800 grayscale hover:grayscale-0 transition-all duration-500">
+            <img
+              src={cardImageSrc}
+              alt={cardImageAlt}
+              className={`w-full h-full ${cardImageFit === 'contain' ? 'object-contain p-5' : 'object-cover'}`}
+            />
+          </div>
           
           {/* Lock overlay for unreleased projects */}
           {expedition.id === 2 && (

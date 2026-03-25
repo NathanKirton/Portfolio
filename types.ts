@@ -19,6 +19,12 @@ export interface ProjectOverview {
   sections: string | string[];
 }
 
+export interface ProjectGalleryImage {
+  src: string;
+  alt: string;
+  fit?: 'cover' | 'contain';
+}
+
 /**
  * Represents a single project/expedition in the portfolio
  * Contains all necessary information for displaying project details
@@ -30,6 +36,11 @@ export interface Expedition {
   title: string;
   description: string;
   imageUrl: string;
+  imageAlt?: string;
+  cardImageUrl?: string;
+  cardImageAlt?: string;
+  cardImageFit?: 'cover' | 'contain';
+  galleryImages?: ProjectGalleryImage[];
   side: 'left' | 'right';
   tools?: ToolCategory[];
   overview?: ProjectOverview;

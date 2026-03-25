@@ -65,6 +65,14 @@ const decodeBase64Utf8 = (base64: string): string => {
   }
 };
 
+const encodeAssetUrl = (value: string): string => {
+  if (/^https?:\/\//i.test(value)) {
+    return value;
+  }
+
+  return encodeURI(value);
+};
+
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   const [activeView, setActiveView] = useState<'demo' | 'repo'>('demo');
   const [repoState, setRepoState] = useState<RepoExplorerState>(INITIAL_REPO_STATE);
@@ -73,6 +81,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   const project = EXPEDITIONS.find(p => p.id === projectId);
 
   const demoUrl = useMemo(() => {
+    const isLocalPreview = typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
     if (projectId === 1) {
       return '/projects/project-1/NorthTech Microservices/tracking-service/public/index.html';
     }
@@ -80,10 +90,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return 'https://www.move2earn.uk';
     }
     if (projectId === 4) {
-      return 'http://localhost:3001';
+      return isLocalPreview ? 'http://127.0.0.1:3001' : 'https://www.irongatelocksmiths.co.uk';
     }
     return '';
   }, [projectId]);
+
+  const detailImageSrc = encodeAssetUrl(project.imageUrl);
 
   const githubRepoUrl = useMemo(() => {
     if (projectId === 3) {
@@ -272,11 +284,44 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
           {/* Project Image */}
           <div className="mb-12 h-96 rounded-lg overflow-hidden border-4 border-black dark:border-primary shadow-lg">
             <img
-              src={project.imageUrl}
-              alt={project.title}
+              src={detailImageSrc}
+              alt={project.imageAlt || project.title}
               className="w-full h-full object-cover"
             />
           </div>
+
+          {project.galleryImages && project.galleryImages.length > 0 && (
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="mb-12"
+            >
+              <div className="flex items-center justify-between gap-4 mb-5">
+                <h2 className="text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white">Branding &amp; Project Assets</h2>
+                <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">Company identity</span>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                {project.galleryImages.map((image) => (
+                  <div
+                    key={image.src}
+                    className="rounded-lg overflow-hidden border-4 border-black dark:border-primary bg-[#fffcf5] dark:bg-neutral-900 shadow-lg"
+                  >
+                    <div className="h-56 bg-gradient-to-br from-[#f8f3e8] to-[#ece5d6] dark:from-neutral-900 dark:to-neutral-800">
+                      <img
+                        src={encodeAssetUrl(image.src)}
+                        alt={image.alt}
+                        className={`w-full h-full ${image.fit === 'contain' ? 'object-contain p-6' : 'object-cover'}`}
+                      />
+                    </div>
+                    <div className="p-4 border-t-2 border-black/10 dark:border-primary/20">
+                      <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">{image.alt}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.section>
+          )}
 
           {/* Tools Used */}
           <motion.section
