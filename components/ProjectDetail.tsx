@@ -90,7 +90,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return 'https://www.move2earn.uk';
     }
     if (projectId === 4) {
-      return isLocalPreview ? 'http://127.0.0.1:3001' : 'https://www.irongatelocksmiths.co.uk';
+      return isLocalPreview
+        ? 'http://127.0.0.1:3001'
+        : '/projects/project-4/Irongate%20Locksmiths/index.html';
     }
     return '';
   }, [projectId]);
