@@ -25,6 +25,11 @@ export interface ProjectGalleryImage {
   fit?: 'cover' | 'contain';
 }
 
+export interface ProjectDemoCredentials {
+  email?: string;
+  password?: string;
+}
+
 /**
  * Represents a single project/expedition in the portfolio
  * Contains all necessary information for displaying project details
@@ -41,6 +46,10 @@ export interface Expedition {
   cardImageAlt?: string;
   cardImageFit?: 'cover' | 'contain';
   galleryImages?: ProjectGalleryImage[];
+  demoUrl?: string;
+  demoMode?: 'iframe' | 'external';
+  demoCredentials?: ProjectDemoCredentials;
+  githubRepoUrl?: string;
   side: 'left' | 'right';
   tools?: ToolCategory[];
   overview?: ProjectOverview;

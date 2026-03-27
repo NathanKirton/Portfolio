@@ -127,6 +127,51 @@ export const EXPEDITIONS: Expedition[] = [
     overview: {
       sections: 'Irongate Locksmiths is a 24/7 emergency locksmith service in South Shields, North East England. Their original website, while functional, lacked modern design and user experience elements. This complete redesign transforms the platform into a professional, engaging, and conversion-focused website.\n\nThe new design features a modern aesthetic with a professional color scheme (Dark Navy, Gold accents, and Red CTAs). The layout is fully responsive, working seamlessly on mobile, tablet, and desktop devices. All key information is preserved and presented in a more accessible, visually appealing manner.\n\nKey improvements include: Interactive service cards showcasing the six main service areas, a clear pricing section with featured options, customer testimonials building trust, multiple contact options (phone, email, form, address), and prominent emergency call buttons throughout. The mobile navigation includes a smooth hamburger menu with animated transitions.\n\nAnimations are subtle but effective – elements fade in as you scroll, cards lift on hover, buttons provide visual feedback, and the emergency badge pulses to draw attention. These animations enhance user engagement without being distracting.\n\nThe contact form includes validation and provides immediate feedback. The pricing section clearly displays services and pricing, with the most popular option highlighted. Testimonials from satisfied customers build credibility and trust.\n\nTechnically, the site uses vanilla JavaScript with no external dependencies, ensuring fast loading and minimal overhead. CSS animations use transforms and opacity for optimal performance. The code is well-organized, maintainable, and easily customizable for future updates.\n\nAll original information has been preserved and enhanced: service listings, pricing, company information, contact details, and customer testimonials. The new design transforms this information into an engaging, professional presentation that encourages visitors to take action and contact Irongate Locksmiths for their locksmith needs.'
     }
+  },
+  {
+    id: 5,
+    date: 'MAR 2026',
+    tag: 'Project 05 • Healthcare Platform',
+    title: 'Alderwell Pharmaceuticals Campaign Portal',
+    description: 'A role-based pharmaceutical operations platform built with React and Supabase. The application provides authenticated entry into multiple dashboards for compliance review, campaign management, marketing and sales, liaison activity, and broader operational workflows.',
+    imageUrl: '/Project Screenshots/Alderwell-Compliance-Portal.svg',
+    imageAlt: 'Alderwell Pharmaceuticals compliance reviewer dashboard screenshot.',
+    cardImageUrl: '/Project Screenshots/Alderwell-Compliance-Portal.svg',
+    cardImageAlt: 'Alderwell Pharmaceuticals compliance reviewer dashboard screenshot.',
+    cardImageFit: 'cover',
+    demoUrl: 'https://alderwell-pharmaceutical.onrender.com/#/login',
+    demoMode: 'iframe',
+    demoCredentials: {
+      email: 'admin@alderwell.com',
+      password: 'AdminAdmin'
+    },
+    githubRepoUrl: 'https://github.com/NathanKirton/Alderwell-Pharmaceutical',
+    side: 'left',
+    tools: [
+      {
+        name: 'Frontend',
+        items: ['React', 'React Router with hash-based routing', 'Role-based dashboard architecture', 'Modular CSS component styling']
+      },
+      {
+        name: 'Backend & Data',
+        items: ['Supabase authentication', 'Supabase database workflows', 'Protected role routes', 'Live dashboard data and CRUD flows']
+      },
+      {
+        name: 'Platform Experience',
+        items: ['Compliance Reviewer dashboard', 'Campaign Management dashboard', 'Marketing & Sales workspace', 'Liaison Officer workflows', 'Authenticated multi-role access control']
+      },
+      {
+        name: 'Deployment',
+        items: ['Hosted on Render', 'Public live login environment', 'GitHub source repository', 'Deployed React single-page app']
+      }
+    ],
+    overview: {
+      sections: [
+        'Alderwell Pharmaceuticals is a role-based web platform designed around day-to-day pharmaceutical operations. From the repository and deployed application, the product includes dedicated dashboard experiences for compliance reviewers, campaign managers, marketing and sales users, liaison officers, and other authenticated roles.',
+        'The frontend is built as a React single-page application using hash-based routing, with Supabase supporting authentication and data-driven workflows. The codebase shows live operational features such as material approvals, audit logs, flagged interactions, campaign management, task handling, and reporting views rather than a single static marketing page.',
+        'For the portfolio, the demo is now embedded directly inside the project detail page so visitors can interact with the live application in place. The linked repository is also exposed alongside the demo so employers and collaborators can inspect the source structure, role routing, and implementation details.'
+      ]
+    }
   }
 ];
 

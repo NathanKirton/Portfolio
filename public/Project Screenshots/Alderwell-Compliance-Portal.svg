@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Alderwell Pharmaceuticals compliance reviewer portal dashboard</title>
+  <desc id="desc">Dashboard screenshot illustration with a dark green sidebar, KPI cards, compliance trend panel, urgent flags card, and recent review table.</desc>
+  <rect width="1600" height="800" fill="#e7ece8"/>
+  <rect width="1600" height="84" fill="#274f3d"/>
+  <text x="32" y="52" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Compliance Reviewer Portal</text>
+  <rect x="1494" y="22" width="98" height="40" rx="6" fill="#df3b2f"/>
+  <text x="1543" y="48" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700">Logout</text>
+
+  <rect y="84" width="268" height="716" fill="#2c5543"/>
+  <rect x="12" y="104" width="242" height="44" rx="6" fill="#4f775f"/>
+  <text x="28" y="131" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">Dashboard</text>
+  <text x="27" y="181" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17">Material Approval Centre</text>
+  <text x="27" y="231" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17">Materials</text>
+  <text x="27" y="281" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17">Audit Logs</text>
+  <text x="27" y="331" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17">Flagged Interactions</text>
+  <text x="27" y="381" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17">Reporting &amp; Analytics</text>
+
+  <line x1="0" y1="664" x2="268" y2="664" stroke="#87a193" stroke-width="1" opacity="0.65"/>
+  <circle cx="48" cy="713" r="27" fill="#f1efe8" stroke="#8e9e93" stroke-width="2"/>
+  <rect x="33" y="702" width="30" height="22" rx="3" fill="#ffffff" stroke="#c6c6c6"/>
+  <text x="48" y="715" text-anchor="middle" fill="#52645a" font-family="Arial, Helvetica, sans-serif" font-size="6" font-weight="700">Alderwell</text>
+  <text x="88" y="710" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">Nathan Kirton</text>
+  <text x="88" y="736" fill="#d9e4dd" font-family="Arial, Helvetica, sans-serif" font-size="14">Compliance Reviewer</text>
+
+  <rect x="266" y="84" width="1334" height="716" fill="#f5f7f6"/>
+
+  <text x="308" y="147" fill="#0e4f51" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700">Dashboard Overview</text>
+  <text x="308" y="181" fill="#74838b" font-family="Arial, Helvetica, sans-serif" font-size="18">Status of pharmaceutical compliance across all departments.</text>
+
+  <rect x="308" y="210" width="412" height="112" rx="16" fill="#ffffff" stroke="#d8ddd9"/>
+  <text x="322" y="241" fill="#7b8690" font-family="Arial, Helvetica, sans-serif" font-size="15">Pending Approvals</text>
+  <text x="322" y="285" fill="#103f48" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">0</text>
+  <text x="679" y="285" fill="#3b9d78" font-family="Arial, Helvetica, sans-serif" font-size="15">Live</text>
+  <rect x="323" y="299" width="380" height="9" rx="5" fill="#e5ece8"/>
+
+  <rect x="732" y="210" width="412" height="112" rx="16" fill="#ffffff" stroke="#d8ddd9"/>
+  <text x="746" y="241" fill="#7b8690" font-family="Arial, Helvetica, sans-serif" font-size="15">High-Risk Flags</text>
+  <text x="746" y="285" fill="#103f48" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">0</text>
+  <text x="1093" y="285" fill="#3b9d78" font-family="Arial, Helvetica, sans-serif" font-size="15">Open</text>
+  <rect x="747" y="299" width="380" height="9" rx="5" fill="#e5ece8"/>
+
+  <rect x="1156" y="210" width="410" height="112" rx="16" fill="#ffffff" stroke="#d8ddd9"/>
+  <text x="1170" y="241" fill="#7b8690" font-family="Arial, Helvetica, sans-serif" font-size="15">Compliance Rate</text>
+  <text x="1170" y="285" fill="#103f48" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">100%</text>
+  <text x="1494" y="285" fill="#3b9d78" font-family="Arial, Helvetica, sans-serif" font-size="15">Reviewed</text>
+  <rect x="1171" y="299" width="380" height="9" rx="5" fill="#e5ece8"/>
+  <rect x="1171" y="299" width="380" height="9" rx="5" fill="#3f9c6b"/>
+
+  <rect x="308" y="344" width="830" height="290" rx="18" fill="#ffffff" stroke="#d8ddd9"/>
+  <text x="322" y="385" fill="#103f48" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Compliance Status Trend</text>
+  <rect x="936" y="359" width="49" height="34" rx="12" fill="#ffffff" stroke="#d7ddd9"/>
+  <rect x="993" y="359" width="58" height="34" rx="12" fill="#ffffff" stroke="#d7ddd9"/>
+  <rect x="1059" y="359" width="60" height="34" rx="12" fill="#ffffff" stroke="#d7ddd9"/>
+  <text x="960" y="381" text-anchor="middle" fill="#274f3d" font-family="Arial, Helvetica, sans-serif" font-size="15">Day</text>
+  <text x="1022" y="381" text-anchor="middle" fill="#274f3d" font-family="Arial, Helvetica, sans-serif" font-size="15">Week</text>
+  <text x="1089" y="381" text-anchor="middle" fill="#274f3d" font-family="Arial, Helvetica, sans-serif" font-size="15">Month</text>
+  <rect x="669" y="406" width="109" height="191" rx="10" fill="#4aa473"/>
+  <rect x="669" y="406" width="109" height="191" rx="10" fill="url(#barGradient)" opacity="0.88"/>
+  <text x="322" y="614" fill="#7a8c8d" font-family="Arial, Helvetica, sans-serif" font-size="15">Based on real reviewed material events in the selected time window.</text>
+
+  <rect x="1152" y="344" width="414" height="290" rx="18" fill="#ffffff" stroke="#d8ddd9"/>
+  <text x="1168" y="385" fill="#103f48" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Urgent Flags</text>
+  <text x="1168" y="464" fill="#6d7d83" font-family="Arial, Helvetica, sans-serif" font-size="16">No urgent flags right now.</text>
+  <rect x="1168" y="533" width="382" height="88" rx="12" fill="#20724a"/>
+  <text x="1359" y="584" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">View All Flagged</text>
+
+  <rect x="308" y="656" width="1258" height="128" rx="18" fill="#ffffff" stroke="#d8ddd9"/>
+  <text x="322" y="694" fill="#103f48" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">Recent Material Reviews</text>
+  <rect x="1475" y="671" width="74" height="34" rx="12" fill="#ffffff" stroke="#d7ddd9"/>
+  <text x="1512" y="693" text-anchor="middle" fill="#274f3d" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Refresh</text>
+  <line x1="330" y1="759" x2="1535" y2="759" stroke="#e0e5e1" stroke-width="1"/>
+  <text x="332" y="742" fill="#55696f" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Review ID</text>
+  <text x="555" y="742" fill="#55696f" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Campaign</text>
+  <text x="853" y="742" fill="#55696f" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Priority</text>
+  <text x="1091" y="742" fill="#55696f" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Status</text>
+  <text x="1306" y="742" fill="#55696f" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700">Actions</text>
+
+  <defs>
+    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#66be8d"/>
+      <stop offset="100%" stop-color="#3e9969"/>
+    </linearGradient>
+  </defs>
+</svg>

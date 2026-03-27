@@ -76,11 +76,16 @@ const encodeAssetUrl = (value: string): string => {
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
   const [activeView, setActiveView] = useState<'demo' | 'repo'>('demo');
   const [repoState, setRepoState] = useState<RepoExplorerState>(INITIAL_REPO_STATE);
+  const [demoCredentialsStatus, setDemoCredentialsStatus] = useState<string>('');
 
   // Find project by ID
   const project = EXPEDITIONS.find(p => p.id === projectId);
 
   const demoUrl = useMemo(() => {
+    if (project?.demoUrl) {
+      return project.demoUrl;
+    }
+
     const isLocalPreview = typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname);
     const deployedProject4Url = import.meta.env.VITE_PROJECT4_DEMO_URL || 'https://irongate-locksmiths-project4.vercel.app';
 
@@ -94,11 +99,13 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return isLocalPreview ? 'http://127.0.0.1:3001' : deployedProject4Url;
     }
     return '';
-  }, [projectId]);
-
-  const detailImageSrc = encodeAssetUrl(project.imageUrl);
+  }, [project?.demoUrl, projectId]);
 
   const githubRepoUrl = useMemo(() => {
+    if (project?.githubRepoUrl) {
+      return project.githubRepoUrl;
+    }
+
     if (projectId === 3) {
       return 'https://github.com/NathanKirton/move2earn-backend';
     }
@@ -109,7 +116,18 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       return SOCIALS.github;
     }
     return '';
-  }, [projectId]);
+  }, [project?.githubRepoUrl, projectId]);
+
+  useEffect(() => {
+    if (activeView === 'repo' && !githubRepoUrl) {
+      setActiveView('demo');
+      return;
+    }
+
+    if (activeView === 'demo' && !demoUrl && githubRepoUrl) {
+      setActiveView('repo');
+    }
+  }, [activeView, demoUrl, githubRepoUrl]);
 
   const repoMeta = useMemo(() => {
     if (!githubRepoUrl) return null;
@@ -231,6 +249,29 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
     }
   };
 
+  const copyDemoCredentialsAndOpen = async () => {
+    if (!project?.demoCredentials || !demoUrl) {
+      return;
+    }
+
+    const { email, password } = project.demoCredentials;
+    const clipboardText = [
+      email ? `Email: ${email}` : '',
+      password ? `Password: ${password}` : '',
+    ].filter(Boolean).join('\n');
+
+    try {
+      if (clipboardText) {
+        await navigator.clipboard.writeText(clipboardText);
+      }
+      setDemoCredentialsStatus('Demo admin credentials copied. The live login has been opened in a new window.');
+    } catch {
+      setDemoCredentialsStatus('The live login has been opened, but the browser blocked clipboard access.');
+    }
+
+    openDemoInNewWindow();
+  };
+
   // Handle missing project
   if (!project) {
     return (
@@ -247,6 +288,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
       </main>
     );
   }
+
+  const detailImageSrc = encodeAssetUrl(project.imageUrl);
+  const shouldShowViewToggle = Boolean(demoUrl && githubRepoUrl);
+  const isExternalDemo = project.demoMode === 'external';
+  const hasDemoCredentials = Boolean(project.demoCredentials?.email || project.demoCredentials?.password);
 
   return (
     <main className="relative z-10 py-20 px-6">
@@ -356,7 +402,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
           >
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <h2 className="text-3xl font-black">Interactive Environment</h2>
-              {demoUrl && (
+              {shouldShowViewToggle && (
                 <div className="relative bg-black rounded-full p-1 border-2 border-black dark:border-primary flex items-center">
                   <motion.div
                     className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-primary rounded-full"
@@ -387,7 +433,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
               <div className="bg-black border-4 border-black dark:border-primary p-0 rounded-lg overflow-hidden">
                 {activeView === 'demo' && demoUrl ? (
                   <>
-                    <div className="flex justify-end p-3 bg-black/70 border-b border-white/10">
+                    <div className="flex flex-wrap justify-end gap-3 p-3 bg-black/70 border-b border-white/10">
+                      {hasDemoCredentials && (
+                        <button
+                          onClick={() => void copyDemoCredentialsAndOpen()}
+                          className="bg-white text-black px-4 py-2 rounded font-black text-xs md:text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black"
+                          title="Copy demo admin credentials and open the live login"
+                        >
+                          <span className="material-symbols-outlined text-sm">content_copy</span>
+                          Copy Admin Login
+                        </button>
+                      )}
                       <button
                         onClick={openDemoInNewWindow}
                         className="bg-primary text-white px-4 py-2 rounded font-black text-xs md:text-sm hover:shadow-lg transition-all flex items-center gap-2 border-[2px] border-black dark:border-primary"
@@ -398,7 +454,44 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                       </button>
                     </div>
 
-                    {projectId === 1 ? (
+                    {hasDemoCredentials && (
+                      <div className="px-4 md:px-5 py-3 bg-white/95 border-b border-black/10 text-sm text-slate-700 flex flex-wrap items-center gap-3">
+                        <span className="font-black uppercase tracking-wide text-xs text-slate-500">Demo Admin</span>
+                        {project.demoCredentials?.email && (
+                          <span>Email: <strong>{project.demoCredentials.email}</strong></span>
+                        )}
+                        {project.demoCredentials?.password && (
+                          <span>Password: <strong>{project.demoCredentials.password}</strong></span>
+                        )}
+                        {demoCredentialsStatus && (
+                          <span className="text-slate-500">{demoCredentialsStatus}</span>
+                        )}
+                      </div>
+                    )}
+
+                    {isExternalDemo ? (
+                      <div className="min-h-[60vh] bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white flex items-center justify-center p-8 md:p-12">
+                        <div className="max-w-2xl text-center">
+                          <img
+                            src={detailImageSrc}
+                            alt={project.imageAlt || project.title}
+                            className="h-24 w-24 md:h-28 md:w-28 object-contain mx-auto mb-6"
+                          />
+                          <p className="text-xs uppercase tracking-[0.2em] text-primary font-black mb-3">Live Hosted Project</p>
+                          <h3 className="text-3xl md:text-4xl font-black mb-4">Open the deployed experience</h3>
+                          <p className="text-slate-300 leading-relaxed mb-8">
+                            This project is linked directly to its hosted application so visitors land in the live environment rather than an embedded preview.
+                          </p>
+                          <button
+                            onClick={openDemoInNewWindow}
+                            className="bg-primary text-white px-6 py-3 rounded font-black text-sm md:text-base hover:shadow-lg transition-all inline-flex items-center gap-2 border-[2px] border-black"
+                          >
+                            <span className="material-symbols-outlined text-base">open_in_new</span>
+                            Launch Live Site
+                          </button>
+                        </div>
+                      </div>
+                    ) : projectId === 1 ? (
                       (() => {
                         const iframeSrc = encodeURI(demoUrl);
                         return (
@@ -427,7 +520,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         style={{ height: '80vh', minHeight: 700, border: 'none', backgroundColor: '#000000' }}
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
                       />
-                    ) : null}
+                    ) : (
+                      <iframe
+                        title={`project-${project.id}-demo`}
+                        src={demoUrl}
+                        className="w-full"
+                        style={{ height: '75vh', minHeight: 600, border: 'none', backgroundColor: '#000000' }}
+                        sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock"
+                      />
+                    )}
                   </>
                 ) : activeView === 'repo' && githubRepoUrl ? (
                   <div className="min-h-[72vh] bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white">
